@@ -13,7 +13,7 @@ function App() {
           <Navbar/>
           {/* <Home/> */}
           {/* <Product/> */}
-          {/** Aporte mio en el App.tsx, agregar despues */}
+          {/** Aporte mio en el App.tsx, agregar */}
           <ProductDetails/>
         </div>
         
