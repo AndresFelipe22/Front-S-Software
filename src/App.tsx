@@ -13,7 +13,7 @@ function App() {
       <ThemeProvider theme={customeTheme}>
         <div>
           <Navbar/>
-          {/*<Home/> */}
+          {/* <Home/> */}
           {/* <Product/> */}
           {/** Aporte mio en el App.tsx, agregar */}
           {/*<ProductDetails/>*/}
