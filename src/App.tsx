@@ -21,7 +21,6 @@ function App() {
           <Review/>
           
         </div>
-        
       </ThemeProvider>
     </>
   );

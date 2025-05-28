@@ -34,7 +34,7 @@
     "dayjs": "^1.11.13",
     "dotenv": "^10.0.0",
     "dotenv-expand": "^5.1.0",
-    "ecommerce-react": "file:",
+    "ecommerce-react": "file:../Front-S-Software",
     "eslint": "^8.3.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-webpack-plugin": "^3.1.1",
