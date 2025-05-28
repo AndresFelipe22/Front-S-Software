@@ -1,8 +1,52 @@
-.custome-border {
-   border: 9px solid;
-   border-color: rgb(253, 58, 91) rgb(99, 99, 99);
+/*
+ * Archivo de estilos para el componente ShopByCategoryCard
+ */
+
+/* Define el círculo contenedor de la imagen */
+.category-card-circle {
+  /* Tu color primario para el borde */
+  border: 4px solid #35A12C;
+  
+  /* Un color de fondo sutil, equivalente a bg-slate-100 de Tailwind */
+  background-color: #f1f5f9;
+
+  /* La transición suave para el cambio de color del borde */
+  transition: border-color 0.3s ease-in-out;
 }
 
-.bg-primary-color {
-    background-color: #f0f0f0;
+/* Define el cambio de color del borde cuando se hace hover en el 'group' */
+.group:hover .category-card-circle {
+  /* Tu color secundario para el hover */
+  border-color: #2d8a24;
+}
+
+/* Define los estilos de la imagen dentro del círculo */
+.category-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  
+  /* La transición suave para el efecto de escala */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Define el efecto de escala en la imagen cuando se hace hover en el 'group' */
+.group:hover .category-card-image {
+  transform: scale(0.95);
+}
+
+/* Define los estilos del título de la categoría */
+.category-card-title {
+  /* Color de texto por defecto, equivalente a text-slate-700 */
+  color: #334155;
+  
+  /* La transición suave para el cambio de color del texto */
+  transition: color 0.3s ease-in-out;
+}
+
+/* Define el cambio de color del título cuando se hace hover en el 'group' */
+.group:hover .category-card-title {
+  /* Tu color primario para el texto en hover */
+  color: #35A12C;
 }

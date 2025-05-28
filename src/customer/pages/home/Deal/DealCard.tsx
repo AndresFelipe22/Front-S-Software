@@ -1,19 +1,39 @@
-import React from 'react'
-import mouseImg from '../../../../Assets/mouse.png'; // Update the path and filename as needed
+import React from 'react';
+import mouseImg from '../../../../Assets/mouse.png'; // Asegúrate de que la ruta a tu imagen sea correcta
 
 const DealCard = () => {
   return (
-    <div className='w-[13rem] cursor-pointer'>
-        <img className='border-x-[7px] border-t-[7px] border-[#2ecc71] w-full h-[12rem] object-cover object-top '
-         src={mouseImg} alt='mouse deal'></img>
-        <div className='border-4 border-black bg-black text-white p-2 text-center'>
-            <p className='text-lg font-semibold'>Mouse</p>
-            <p className='text-2xl font-bold'>20% off</p>
-            <p className='text-balance text-lg'>shop now</p>
+    // Contenedor principal de la tarjeta
+    <div className='relative w-full max-w-[14rem] cursor-pointer group overflow-hidden rounded-lg shadow-lg'>
+      
+      {/* Etiqueta de la oferta */}
+      <div className='absolute top-2 right-2 z-10 bg-sky-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md'>
+        20% OFF
+      </div>
 
-        </div>
+      {/* Imagen del producto */}
+      <div className='overflow-hidden'>
+        <img 
+          className='w-full h-[12rem] object-cover object-top transition-transform duration-300 group-hover:scale-110'
+          src={mouseImg} 
+          alt='Oferta de mouse'
+        />
+      </div>
+      
+      {/* Contenido de la tarjeta */}
+      <div className='p-4 bg-white text-center'>
+        <p className='text-lg font-semibold text-slate-800'>Mouse Gamer</p>
+        
+        {/* Botón de compra */}
+        <button className='mt-3 w-full bg-[#35A12C] text-white font-bold py-2 px-4 rounded-md hover:bg-[#2d8a24] transition-colors duration-300'>
+          Comprar ahora
+        </button>
+
+        {/* Elemento de acento opcional */}
+        <div className='mt-4 h-1 w-1/4 mx-auto bg-cyan-500 group-hover:bg-cyan-700 transition-colors duration-300 rounded-full'></div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default DealCard
+export default DealCard;
