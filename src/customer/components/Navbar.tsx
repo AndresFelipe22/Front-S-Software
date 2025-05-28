@@ -70,7 +70,7 @@ const Navbar = () => {
             </Button> : <Button variant="contained">Login</Button>
           }
           {/* Botón "Vende" solo en pantallas grandes */}
-          {isLarge &&<Button startIcon={<Storefront/>} variant='outlined'>
+          {isLarge &&<Button onClick={{}=>navigate("/become-seller")} startIcon={<Storefront/>} variant='outlined'>
             Vende 
           </Button>}
         </div>

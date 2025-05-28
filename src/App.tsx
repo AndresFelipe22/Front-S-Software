@@ -6,7 +6,6 @@ import customeTheme from './Theme/customeTheme';
 import Home from './customer/pages/home/Home';
 import ProductDetails from './customer/pages/PageDetails/ProductDetails';
 import Review from './customer/pages/Review/Review';
-import Cart from './customer/pages/Cart/Cart';
 
 function App() {
   return (
@@ -19,12 +18,9 @@ function App() {
           {/** Aporte mio en el App.tsx, agregar */}
           {/*<ProductDetails/>*/}
           {/** Aporte mio en el App.tsx, Se comento el ProductDetails, Info relevante */}
-          {/* <Review/> */}
-          {/** Aporte mio en el App.tsx, */}
-          <Cart/>
+          <Review/>
           
         </div>
-        
       </ThemeProvider>
     </>
   );
