@@ -1,11 +1,7 @@
 import React from 'react';
 import { Box, TextField } from '@mui/material';
 import { FormikProps } from 'formik';
-
-interface FormValues {
-  mobile: string;
-  GSTIN: string;
-}
+import { FormValues } from './types';
 
 interface Props {
   formik: FormikProps<FormValues>;
@@ -29,12 +25,12 @@ const BecomeSellerFormStep1: React.FC<Props> = ({ formik }) => {
 
         <TextField
           fullWidth
-          name="GSTIN"
+          name="gstin" 
           label="GSTIN"
-          value={formik.values.GSTIN}
+          value={formik.values.gstin}
           onChange={formik.handleChange}
-          error={formik.touched.GSTIN && Boolean(formik.errors.GSTIN)}
-          helperText={formik.touched.GSTIN && formik.errors.GSTIN}
+          error={formik.touched.gstin && Boolean(formik.errors.gstin)}
+          helperText={formik.touched.gstin && formik.errors.gstin}
         />
       </Box>
     </Box>

@@ -1,15 +1,7 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 import { FormikProps } from 'formik';
-
-interface FormValues {
-  businessDetails: {
-    businessName: string;
-  };
-  sellerName: string;
-  email: string;
-  password: string;
-}
+import { FormValues } from './types';
 
 interface BecomeSellerFormStep4Props {
   formik: FormikProps<FormValues>;
