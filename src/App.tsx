@@ -5,6 +5,7 @@ import { ThemeProvider } from '@emotion/react';
 import customeTheme from './Theme/customeTheme';
 import Home from './customer/pages/home/Home';
 import ProductDetails from './customer/pages/PageDetails/ProductDetails';
+import Review from './customer/pages/Review/Review';
 
 function App() {
   return (
@@ -12,9 +13,10 @@ function App() {
       <ThemeProvider theme={customeTheme}>
         <div>
           <Navbar/>
-          <Home/>
+          {/* <Home/> */}
           {/* <Product/> */}
           {/** Aporte mio en el App.tsx, agregar */}
+<<<<<<< HEAD
           <ProductDetails/>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -27,6 +29,12 @@ function App() {
           <Route path='/account' element={<Account/>} />
         
         </Routes>
+=======
+          {/*<ProductDetails/>*/}
+          {/** Aporte mio en el App.tsx, Se comento el ProductDetails, Info relevante */}
+          <Review/>
+          
+>>>>>>> dd0c2fcca1f661944264eae61a0a06e696d28bcd
         </div>
         
       </ThemeProvider>

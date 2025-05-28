@@ -13,6 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import SimilarProduct from './SimilarProduct';
+import ReviewCard from '../Review/ReviewCard';
 
 
 
@@ -132,6 +133,12 @@ const ProductDetails = () => {
             <p>Clave en el rendimiento de tu computadora de escritorio, ya no tenés que pensar en cómo distribuir el tiempo y acciones porque ahora las tareas en simultáneo son posibles.
             AMD cuenta con un catálogo de productos que se adaptan a los requerimientos de todo tipo de usuarios: juegos en línea, edición a gran escala, contenido en múltiples plataformas y más.</p>
          </div>
+
+         <div className='mt-12 space-y-5'> 
+             <ReviewCard/>
+             <Divider/>   
+         </div>
+
         </section>
 
       </div>
