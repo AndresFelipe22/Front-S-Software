@@ -6,40 +6,33 @@ import customeTheme from './Theme/customeTheme';
 import Home from './customer/pages/home/Home';
 import ProductDetails from './customer/pages/PageDetails/ProductDetails';
 import Review from './customer/pages/Review/Review';
+import { Routes, Route } from 'react-router-dom';
+import Product from './customer/pages/Products/Product'; // Asumiendo que existe
+import Cart from './customer/pages/Cart/Cart'; // Asumiendo que existe
+import Checkout from './customer/pages/Checkout/Checkout'; // Asumiendo que existe
+import Account from './customer/pages/Account/Account'; // Asumiendo que existe
 
 function App() {
   return (
     <>
       <ThemeProvider theme={customeTheme}>
         <div>
-          <Navbar/>
-          {/* <Home/> */}
-          {/* <Product/> */}
-          {/** Aporte mio en el App.tsx, agregar */}
-<<<<<<< HEAD
-          <ProductDetails/>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products/:category" element={<Product/>} />
-          <Route path="/revews/:productId" element={<Product/>} />
-          <Route path="/product-details/:categoryId/:name/:productId" element={<Product/>} />
-          <Route path='/Cart' element={<Cart/>} />
-          <Route path='/checkout' element={<Checkout/>} />
-          <Route path='/become-seller' element={<Checkout/>} />
-          <Route path='/account' element={<Account/>} />
-        
-        </Routes>
-=======
-          {/*<ProductDetails/>*/}
-          {/** Aporte mio en el App.tsx, Se comento el ProductDetails, Info relevante */}
-          <Review/>
-          
->>>>>>> dd0c2fcca1f661944264eae61a0a06e696d28bcd
+          <Navbar />
+          <ProductDetails />
+          <Review />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products/:category" element={<Product />} />
+            <Route path="/revews/:productId" element={<Product />} />
+            <Route path="/product-details/:categoryId/:name/:productId" element={<Product />} />
+            <Route path="/Cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/become-seller" element={<Checkout />} />
+            <Route path="/account" element={<Account />} />
+          </Routes>
         </div>
-        
       </ThemeProvider>
     </>
-
   );
 }
 
