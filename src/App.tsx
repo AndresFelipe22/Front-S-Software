@@ -6,6 +6,8 @@ import customeTheme from './Theme/customeTheme';
 import Home from './customer/pages/home/Home';
 import ProductDetails from './customer/pages/PageDetails/ProductDetails';
 import Review from './customer/pages/Review/Review';
+import { Routes, Route } from 'react-router-dom';
+import BecomeSeller from './customer/pages/Become Seller/BecomeSeller';
 
 function App() {
   return (
@@ -13,13 +15,11 @@ function App() {
       <ThemeProvider theme={customeTheme}>
         <div>
           <Navbar/>
-          {/* <Home/> */}
-          {/* <Product/> */}
-          {/** Aporte mio en el App.tsx, agregar */}
-          {/*<ProductDetails/>*/}
-          {/** Aporte mio en el App.tsx, Se comento el ProductDetails, Info relevante */}
-          <Review/>
-          
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/become-seller" element={<BecomeSeller />} />
+            {/* Puedes agregar más rutas aquí si lo necesitas */}
+          </Routes>
         </div>
       </ThemeProvider>
     </>
