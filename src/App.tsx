@@ -8,6 +8,8 @@ import ProductDetails from './customer/pages/PageDetails/ProductDetails';
 import Review from './customer/pages/Review/Review';
 import Cart from './customer/pages/Cart/Cart';
 import Checkout from './customer/pages/Checkout/Checkout';
+import { Routes, Route } from 'react-router-dom';
+import BecomeSeller from './customer/pages/Become Seller/BecomeSeller';
 
 function App() {
   return (
@@ -23,6 +25,11 @@ function App() {
           {/*<Review/>*/}
           {/*<Cart/>*/}
           <Checkout/>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/become-seller" element={<BecomeSeller />} />
+            {/* Puedes agregar más rutas aquí si lo necesitas */}
+          </Routes>
           
         </div>
       </ThemeProvider>
