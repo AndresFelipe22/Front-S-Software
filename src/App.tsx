@@ -26,7 +26,7 @@ function App() {
           {/*<Cart/>*/}
           <Checkout/>
           <Routes>
-            <Route path="/" element={<Home />} />
+            {/*<Route path="/" element={<Home />} />*/}
             <Route path="/become-seller" element={<BecomeSeller />} />
             {/* Puedes agregar más rutas aquí si lo necesitas */}
           </Routes>
