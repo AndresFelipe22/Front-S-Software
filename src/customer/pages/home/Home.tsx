@@ -2,8 +2,7 @@ import React from 'react'
 import PeripheralsCategory from './PeripheralsCategory/PeripheralsCategory'
 import Deal from './Deal/Deal'
 import ShopBycategory from './ShopByCategory/ShopBycategory'
-import Vende from '../../../Assets/seller_banner_image.jpg'
-import { Button } from '@mui/material'
+import Button from '@mui/material/Button'
 import Storefront from '@mui/icons-material/Storefront'
 import CategoryGrid from './CategoryGrid/CategoryGrid'
 
@@ -68,9 +67,9 @@ const Home = () => {
           </div>
           {/* CTA Button */}
           <div className="pt-4 lg:pt-8">
-            <button className="group bg-white text-green-700 px-6 lg:px-8 py-3 lg:py-4 rounded-xl font-bold text-base lg:text-lg hover:bg-gray-50 transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1">
-              <span style={{ color: '#35A12C' }}>Vende con nosotros</span>
-            </button>
+            <Button startIcon={<Storefront />} variant="contained" >
+              Vende con nosotros
+            </Button>
           </div>
         </div>
       </div>
