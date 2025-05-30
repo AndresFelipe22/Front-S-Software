@@ -1,12 +1,15 @@
+// Importaciones necesarias
 import React, { useState } from 'react';
 import { Stepper, Step, StepLabel, Button } from '@mui/material';
 import { useFormik } from 'formik';
 
+// Importamos los formularios por pasos
 import BecomeSellerFormStep1 from './BecomeSellerFormStep1';
 import BecomeSellerFormStep2 from './BecomeSellerFormStep2';
 import BecomeSellerFormStep3 from './BecomeSellerFormStep3';
 import BecomeSellerFormStep4 from './BecomeSellerFormStep4';
 
+// Array con los nombres de cada paso del formulario
 const steps = [
   "Tax Details & Mobile",
   "Pickup Address",
@@ -14,7 +17,7 @@ const steps = [
   "Supplier Details",
 ];
 
-// Definición de tipos para el formulario
+// Interfaces para definir la estructura de los datos del formulario
 interface PickupAddress {
   name: string;
   mobile: string;
@@ -40,6 +43,7 @@ interface BusinessDetails {
   businessAddress: string;
 }
 
+// Interfaz principal que representa todos los datos del formulario
 interface FormValues {
   mobile: string;
   otp: string;
@@ -52,22 +56,29 @@ interface FormValues {
   password: string;
 }
 
+// Componente principal del formulario paso a paso
 const SellerAccountForm = () => {
+  // Estado para saber en qué paso está el usuario
   const [activeStep, setActiveStep] = useState(0);
 
+  // Simula la creación de cuenta (se podría conectar a backend más adelante)
   const handleCreateAccount = () => {
     console.log("create account");
   };
 
+  // Función que cambia al paso anterior o siguiente
   const handleStep = (value: number) => () => {
     if (activeStep + value >= 0 && activeStep + value < steps.length) {
+      // Cambia al paso siguiente o anterior si es válido
       setActiveStep(activeStep + value);
     } else if (activeStep === steps.length - 1 && value === 1) {
+      // Si estamos en el último paso y el usuario le da a "Crear cuenta"
       handleCreateAccount();
     }
     console.log("active step", activeStep);
   };
 
+  // Inicializamos Formik con los valores iniciales y la función para enviar el formulario
   const formik = useFormik<FormValues>({
     initialValues: {
       mobile: "",
@@ -100,12 +111,14 @@ const SellerAccountForm = () => {
       password: "",
     },
     onSubmit: (values) => {
+      // Aquí se manejaría el envío del formulario (por ejemplo, con una API)
       console.log(values, "Form submitted");
     },
   });
 
   return (
     <div>
+      {/* Barra de pasos en la parte superior */}
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
@@ -114,8 +127,10 @@ const SellerAccountForm = () => {
         ))}
       </Stepper>
 
+      {/* Sección con el contenido del formulario */}
       <section className="mt-20 space-y-10">
         <div>
+          {/* Mostramos el formulario correspondiente al paso actual */}
           {activeStep === 0 ? (
             <BecomeSellerFormStep1 formik={formik} />
           ) : activeStep === 1 ? (
@@ -127,15 +142,20 @@ const SellerAccountForm = () => {
           )}
         </div>
 
+        {/* Botones para avanzar o retroceder */}
         <div className="flex items-center justify-between">
           <Button
-            onClick={handleStep(-1)}
+            onClick={handleStep(-1)} // Retrocede un paso
             variant="contained"
-            disabled={activeStep === 0}
+            disabled={activeStep === 0} // Desactiva si estamos en el primer paso
           >
             Back
           </Button>
-          <Button onClick={handleStep(1)} variant="contained">
+
+          <Button
+            onClick={handleStep(1)} // Avanza al siguiente paso o envía el formulario
+            variant="contained"
+          >
             {activeStep === steps.length - 1 ? "Create Account" : "Continue"}
           </Button>
         </div>
