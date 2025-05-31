@@ -29,6 +29,7 @@ function App() {
             {/*<Route path="/" element={<Home />} />*/}
             <Route path="/become-seller" element={<BecomeSeller />} />
             {/* Puedes agregar más rutas aquí si lo necesitas */}
+            <Route path='/seller/*' element={<SellerDashboard/>} />
           </Routes>
           
         </div>
