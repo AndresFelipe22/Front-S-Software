@@ -65,7 +65,7 @@ const Cart = () => {
                   <PricingCard/>
                   <div className='p-5'>
                     <Button 
-                    onClick={()=>navigate("checkout")}
+                    onClick={()=>navigate("/checkout")}
                     fullWidth 
                     variant='contained' 
                     sx={{py:"11px"}}>

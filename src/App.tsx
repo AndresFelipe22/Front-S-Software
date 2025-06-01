@@ -35,7 +35,7 @@ function App() {
             <Route path="/product-details/:categoryId/:name/:productId" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="/account" element={<Account />} />
+            <Route path="/account/*" element={<Account />} />
             {/* Puedes agregar más rutas aquí si lo necesitas */}
             
             {/*<Route path="/become-seller" element={<BecomeSeller />} />*/}

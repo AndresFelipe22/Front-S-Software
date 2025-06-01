@@ -90,7 +90,7 @@ const Navbar = () => {
           </IconButton>
 
           {/* Usuario autenticado: muestra avatar y nombre, si no, botón de login */}
-          {false ? (
+          {true ? (
             <Button onClick={()=>navigate("/account/orders")} className="flex items-center gap-2">
               <Avatar
                 sx={{ width: 29, height: 29 }}
