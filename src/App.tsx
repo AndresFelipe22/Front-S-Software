@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Navbar from './customer/components/Navbar';
+import Navbar from './customer/components/Navbar/Navbar';
 import { ThemeProvider } from '@emotion/react';
 import customeTheme from './Theme/customeTheme';
 import Home from './customer/pages/home/Home';
@@ -10,6 +10,7 @@ import Cart from './customer/pages/Cart/Cart';
 import Checkout from './customer/pages/Checkout/Checkout';
 import { Routes, Route } from 'react-router-dom';
 import BecomeSeller from './customer/pages/Become Seller/BecomeSeller';
+import Product from './customer/pages/Products/Product';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <div>
           <Navbar/>
           {/* <Home/> */}
-          {/* <Product/> */}
+          <Product/>
           {/** Aporte mio en el App.tsx, agregar */}
           {/*<ProductDetails/>*/}
           {/** Aporte mio en el App.tsx, Se comento el ProductDetails, Info relevante */}
