@@ -10,6 +10,7 @@ import Cart from './customer/pages/Cart/Cart';
 import Checkout from './customer/pages/Checkout/Checkout';
 import { Routes, Route } from 'react-router-dom';
 import BecomeSeller from './customer/pages/Become Seller/BecomeSeller';
+import Account from './customer/pages/Account/Account';
 import Product from './customer/pages/Products/Product';
 
 function App() {
@@ -19,16 +20,25 @@ function App() {
         <div>
           <Navbar/>
           {/* <Home/> */}
-          <Product/>
+          {/* <Product/> */}
           {/** Aporte mio en el App.tsx, agregar */}
-          {/*<ProductDetails/>*/}
+          {/* <ProductDetails/> */}
           {/** Aporte mio en el App.tsx, Se comento el ProductDetails, Info relevante */}
-          {/*<Review/>*/}
+          {/* <Review/>*/}
           {/*<Cart/>*/}
-          <Checkout/>
+          {/*<Checkout/>*/}
+          {/*<Account/>*/}
           <Routes>
-            {/*<Route path="/" element={<Home />} />*/}
-            <Route path="/become-seller" element={<BecomeSeller />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/products/:category" element={<Product />} />
+            <Route path="/reviews/:productId" element={<Review />} />
+            <Route path="/product-details/:categoryId/:name/:productId" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/account" element={<Account />} />
+            {/* Puedes agregar más rutas aquí si lo necesitas */}
+            
+            {/*<Route path="/become-seller" element={<BecomeSeller />} />*/}
             {/* Puedes agregar más rutas aquí si lo necesitas */}
           </Routes>
           
