@@ -1,10 +1,15 @@
 import { Divider } from '@mui/material'
 import React from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Route, Routes } from 'react-router-dom'
+import Orders from './Orders';
+import OrderDetails from './OrderDetails';
+import UserDetails from './UserDetails';
+import Address from './Address';
+
 
 const menu = [
   { name: 'Orders', path: '/account/orders' },
-  { name: 'Profile', path: '/account/profile' },
+  { name: 'Profile', path: '/account' },
   { name: 'Saved Cards', path: '/account/saved-cards' },
   { name: 'Addresses', path: '/account/addresses' },
   { name: 'Logout', path: '/' }
@@ -32,15 +37,21 @@ const Account = () => {
               <div onClick={()=>handleClick(item)} key={item.name} 
               className={`${item.path===location.pathname?"bg-primary-color text-white":""}
                 py-3 cursor-pointer hover:text-white
-               hover:bg-primary-color px-5 rounded-md`}>
+               hover:bg-primary-color px-5 rounded-md border-b`}>
                 <p>
                   {item.name}</p>
               </div>
             ))
           }
         </section>
-        <section className='right'>
-          right
+        <section className='right lg:col-span-2 lg:pl-5 py-5'>
+          <Routes>
+            <Route path='/orders' element={<Orders />} />
+            <Route path='/order/:orderId/:orderItemId' element={<OrderDetails />} />
+            <Route path='/' element={<UserDetails />} />
+            <Route path='/addresses' element={<Address />} />
+          </Routes>
+          
         </section>
 
       </div>

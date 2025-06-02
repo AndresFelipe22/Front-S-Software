@@ -4,7 +4,9 @@ import MouseImg from '../../../../Assets/mouse.png'; // Asegúrate de que la rut
 // Paso 1: Importa tu archivo CSS
 import './ShopByCategory.css';
 
+// Componente ShopByCategoryCard: muestra una tarjeta circular para una categoría destacada
 const ShopByCategoryCard = () => {
+  // Renderiza la tarjeta circular con imagen y título de la categoría
   return (
     // Mantenemos Tailwind para el layout (flex, gap, etc.) y la funcionalidad 'group'
     <div className='flex flex-col items-center gap-4 group cursor-pointer'>

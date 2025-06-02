@@ -4,7 +4,7 @@ import AdressCard from './AdressCard'
 import { Modal, Box, } from '@mui/material';
 import AdressForm from './AdressForm';
 import PricingCard from '../Cart/PricingCard';
-import razor from '../../../Assets/razorpay.png';
+import mercadopago from '../../../Assets/mercado.png';
 import paypal from '../../../Assets/paypal.png';
 
 
@@ -22,7 +22,7 @@ const style = {
 const paymentGatwayList=[
     {
         value:"razorpay",
-        image: razor,
+        image: mercadopago,
         label:""
     },
     {
@@ -93,7 +93,7 @@ const Checkout = () => {
                                     control={<Radio />} 
                                     label={
                                         <img 
-                                        className={ `${item.value=="stripe"?"w-14":""} object` }
+                                        className={ `${item.value=="stripe"?"w-12":""} object` }
                                         src={item.image} alt={item.label}/>
                                     }
                                     />) }

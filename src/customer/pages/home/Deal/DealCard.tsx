@@ -1,7 +1,9 @@
 import React from 'react';
 import mouseImg from '../../../../Assets/mouse.png'; // Asegúrate de que la ruta a tu imagen sea correcta
 
+// Componente DealCard: muestra una tarjeta individual de producto en oferta
 const DealCard = () => {
+  // Renderiza la tarjeta de oferta con imagen, descuento y botón de compra
   return (
     // Contenedor principal de la tarjeta
     <div className='relative w-full max-w-[14rem] cursor-pointer group overflow-hidden rounded-lg shadow-lg'>
