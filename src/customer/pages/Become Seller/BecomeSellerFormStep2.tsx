@@ -1,20 +1,32 @@
+// Importamos React
 import React from 'react';
-import { Box, TextField } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2';
-import { FormikProps } from 'formik';
-import { FormValues } from './types'; // Importa el tipo correcto
 
+// Importamos componentes de Material UI para el diseño y los campos del formulario
+import { Box, TextField } from '@mui/material';
+
+// Grid2 es una versión inestable del sistema de grid de Material UI (como una cuadrícula para organizar los campos)
+import Grid2 from '@mui/material/Unstable_Grid2';
+
+// Importamos los tipos necesarios para usar Formik correctamente
+import { FormikProps } from 'formik';
+import { FormValues } from './types'; // Tipo que define la estructura del formulario
+
+// Definimos los props que recibe este componente
 interface Props {
-  formik: FormikProps<FormValues>;
+  formik: FormikProps<FormValues>; // El componente recibe todos los datos y funciones que maneja Formik
 }
 
+// Componente del paso 2 del formulario para convertirse en vendedor
 const BecomeSellerFormStep2: React.FC<Props> = ({ formik }) => {
-  // Accede al sub-objeto pickupAddress para mayor comodidad
+  // Obtenemos directamente el objeto de dirección de recogida desde los valores del formulario
   const pickupAddress = formik.values.pickupAddress;
 
   return (
     <Box>
+      {/* Contenedor tipo grid con espacio entre columnas/filas */}
       <Grid2 container spacing={3}>
+
+        {/* Campo: Nombre de quien recogerá el producto */}
         <Grid2 xs={12}>
           <TextField
             fullWidth
@@ -26,6 +38,8 @@ const BecomeSellerFormStep2: React.FC<Props> = ({ formik }) => {
             helperText={formik.touched.pickupAddress?.name && formik.errors.pickupAddress?.name}
           />
         </Grid2>
+
+        {/* Campo: Móvil de contacto */}
         <Grid2 xs={6}>
           <TextField
             fullWidth
@@ -37,6 +51,8 @@ const BecomeSellerFormStep2: React.FC<Props> = ({ formik }) => {
             helperText={formik.touched.pickupAddress?.mobile && formik.errors.pickupAddress?.mobile}
           />
         </Grid2>
+
+        {/* Campo: Dirección completa */}
         <Grid2 xs={12}>
           <TextField
             fullWidth
@@ -48,6 +64,8 @@ const BecomeSellerFormStep2: React.FC<Props> = ({ formik }) => {
             helperText={formik.touched.pickupAddress?.address && formik.errors.pickupAddress?.address}
           />
         </Grid2>
+
+        {/* Campo: Localidad o zona */}
         <Grid2 xs={12}>
           <TextField
             fullWidth
@@ -59,6 +77,8 @@ const BecomeSellerFormStep2: React.FC<Props> = ({ formik }) => {
             helperText={formik.touched.pickupAddress?.locality && formik.errors.pickupAddress?.locality}
           />
         </Grid2>
+
+        {/* Campo: Ciudad */}
         <Grid2 xs={6}>
           <TextField
             fullWidth
@@ -70,6 +90,8 @@ const BecomeSellerFormStep2: React.FC<Props> = ({ formik }) => {
             helperText={formik.touched.pickupAddress?.city && formik.errors.pickupAddress?.city}
           />
         </Grid2>
+
+        {/* Campo: Estado o provincia */}
         <Grid2 xs={6}>
           <TextField
             fullWidth
@@ -86,4 +108,5 @@ const BecomeSellerFormStep2: React.FC<Props> = ({ formik }) => {
   );
 };
 
+// Exportamos el componente para poder usarlo en otros archivos
 export default BecomeSellerFormStep2;
