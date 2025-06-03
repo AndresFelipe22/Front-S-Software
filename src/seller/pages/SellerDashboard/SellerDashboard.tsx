@@ -1,21 +1,21 @@
-import React from "react";
-
-import SellerRoutes from "../../../Routes/SellerRoutes";
-import SellerDrawerList from "../../components/SellerDrawerList/SellerDrawerList";
+import React from 'react'
+import SellerDrawerList from '../../components/SellerDrawerList/SellerDrawerList'
+import SellerRoutes from '../../../Routes/SellerRoutes'
 
 const SellerDashboard = () => {
   return (
-    <div className="min-h-screen">
-      <section className="lg:flex lg:h-[90vh]">
-        <div className="hidden lg:block h-full">
-        <SellerDrawerList/>
-        </div>
-        <div className="p-10 w-full lg:w-[80%]  overflow-y-auto">
-          <SellerRoutes />
-        </div>
+  <div>
+    <div className='lg:flex lg:h-[90vh]'>
+      
+      <section className="hidden lg:block h-full">
+        <SellerDrawerList />
+      </section>
+      <section className='p-10 w-full lg:w-[80%] overflow-y-auto'>
+        <SellerRoutes />
       </section>
     </div>
-  );
-};
+  </div>
+  )
+}
 
 export default SellerDashboard;

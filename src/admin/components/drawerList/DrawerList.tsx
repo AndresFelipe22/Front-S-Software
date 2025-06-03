@@ -3,7 +3,6 @@ import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useLocation, useNavigate } from "react-router-dom";
-import { performLogout } from "../../../Redux Toolkit/Customer/AuthSlice";
 
 export interface Menu{
     name: string;
@@ -23,13 +22,13 @@ const DrawerList = ({ toggleDrawer,menu,menu2 }: DrawerListProps) => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        performLogout();
-    };
+//     const handleLogout = () => {
+//         performLogout();
+//     };
 
     const handleClick = (item: any) => (event: React.MouseEvent | React.KeyboardEvent) => {
         if (item.name === "Logout") {
-            handleLogout();
+            // handleLogout();
         }
         navigate(item.path);
         if (toggleDrawer) toggleDrawer(false)();

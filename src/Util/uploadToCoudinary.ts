@@ -1,6 +1,6 @@
 export const uploadToCoudinary = async (pics:any) => {
 
-    const cloud_name="dxoqwusir"
+    const cloud_name="dcpesbd8q"
     const upload_preset="zosh-food"
     
     if (pics) {
@@ -11,8 +11,8 @@ export const uploadToCoudinary = async (pics:any) => {
       data.append("cloud_name", cloud_name);
   
       const res = await 
-      fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
-        method: "post",
+      fetch("https://api.cloudinary.com/v1_1/dcpesbd8q/image/upload", {
+        method: "POST",
         body: data,
       })
         
@@ -21,6 +21,6 @@ export const uploadToCoudinary = async (pics:any) => {
         return fileData.url
   
     } else {
-      console.log("error");
+      console.log("error : pics not found");
     }
-  };
+  }

@@ -1,12 +1,16 @@
+import React from 'react'
 import { Box, Button, Divider } from '@mui/material'
 import PaymentsIcon from '@mui/icons-material/Payments';
 import Img5 from '../../../Assets/img-5.png';
 import { useNavigate } from 'react-router-dom';
-import React from 'react'
 import OrderStepper from './OrderStepper';
 
 const OrderDetails = () => {
     const navigate = useNavigate();
+    // Datos de orden simulados o indefinidos
+    // El objeto order está indefinido, así que forzamos el tipo para evitar el error TS2339.
+    const order: any = undefined;
+
   return (
     <Box className='space-y-5 '>
 
@@ -23,7 +27,7 @@ const OrderDetails = () => {
       </section>
 
       <section className='border p-5'>
-        <OrderStepper orderStatus={"SHIPPED"} />
+        <OrderStepper orderStatus={order?.orderStatus ?? 'PENDING'} />
 
       </section>
 
