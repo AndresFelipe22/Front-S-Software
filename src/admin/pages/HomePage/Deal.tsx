@@ -24,9 +24,9 @@ const Deal = () => {
           </Button>
         )}
       </div>
-      <div className='mt-5 flex-col justify-center items-center h-[70vh]'>
+      <div className='mt-5'>
           {activeTab == "Ofertas" ? <DealTable /> : activeTab === "Categoría" ? ( <DealCategoryTable /> ) : ( 
-            <div> 
+            <div  className="mt-5 flex flex-col h-[70vh]"> 
               <CreateDealForm /> 
             </div> )}
       </div>
