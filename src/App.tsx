@@ -9,6 +9,8 @@ import { Routes, Route } from 'react-router-dom';
 import Account from './customer/pages/Account/Account';
 import Product from './customer/pages/Products/Product';
 import SellerDashboard from './seller/pages/SellerDashboard/SellerDashboard';
+import Checkout from './customer/pages/Checkout/Checkout';
+import AdminDashBoard from './admin/pages/DashBoard/AdminDashBoard';
 
 function App() {
   return (
@@ -22,10 +24,11 @@ function App() {
             {/*<Route path="/reviews/:productId" element={<Review/>} /> */}
             <Route path="/product-details/:categoryId/:name/:productId" element={<Product />} />
             {/*<Route path='/cart' element={<Cart/>} />*/}
-            <Route path='/become-seller' element={<BecomeSeller />} />
-            <Route path='/account/*' element={<Account />} />
-            <Route path='/seller/*' element={<SellerDashboard/>} />
-            {/* Puedes agregar más rutas aquí si lo necesitas */}
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/become-seller" element={<BecomeSeller />} />
+            <Route path="/account/*" element={<Account />} />
+            <Route path="/seller/*" element={<SellerDashboard />} />
+            <Route path="/admin/*" element={<AdminDashBoard />} />
           </Routes>
         </div>
       </ThemeProvider>
