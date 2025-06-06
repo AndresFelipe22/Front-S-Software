@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import Navbar from './customer/components/Navbar/Navbar';
 import { ThemeProvider } from '@emotion/react';
@@ -11,8 +11,13 @@ import Product from './customer/pages/Products/Product';
 import SellerDashboard from './seller/pages/SellerDashboard/SellerDashboard';
 import Checkout from './customer/pages/Checkout/Checkout';
 import AdminDashBoard from './admin/pages/DashBoard/AdminDashBoard';
+import { fetchProducts } from './State/fetchProducts';
 
 function App() {
+  useEffect(() => {
+  fetchProducts();
+}, []);
+
   return (
     <>
       <ThemeProvider theme={customeTheme}>
