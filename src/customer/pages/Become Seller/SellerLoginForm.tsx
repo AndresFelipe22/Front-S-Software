@@ -1,20 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik'; // Hook para manejar formularios fácilmente
 import { TextField, Button } from '@mui/material'; // Componentes de Material UI
+import { useAppDispatch } from '../../../State/Store';
+import { sendLoginSignupOtp, signin } from '../../../State/AuthSlice';
+import { sellerLogin } from '../../../State/seller/sellerAuthSlice';
 
 // Componente para el formulario de login del vendedor
 const SellerLoginForm = () => {
+
+  const [isOtpSent, setIsOtpSent] = useState(false)
+  const dispatch=useAppDispatch();
   // Inicializamos formik para manejar valores y envío del formulario
   const formik = useFormik({
     initialValues: {
       email: '', // Valor inicial del campo email
-      otp: '',   // Valor inicial del campo OTP (código de verificación)
+      otp: ''   // Valor inicial del campo OTP (código de verificación)
     },
     onSubmit: (values) => {
       // Acción al enviar el formulario: mostramos los valores en consola
       console.log('form data', values);
+      //values.otp=Number(values.otp)
+      dispatch(sellerLogin({email: values.email, otp: values.otp}))
     },
   });
+
+  //const handleResendOTP = () => {
+        // Implement OTP resend logic
+        //dispatch(sendLoginSignupOtp({ email: formik.values.email }))
+        //console.log('Resend OTP');
+        //setTimer(30);
+        //setIsTimerActive(true);};
+
+  const handleSentOtp=()=>{
+      dispatch(sendLoginSignupOtp({ email: formik.values.email }))
+    };
+  
+  const handleLogin=()=>{
+    // dispatch(signin({ email: }))
+  };
+
+
 
   return (
     <div>
@@ -59,7 +84,11 @@ const SellerLoginForm = () => {
         )}
 
         {/* Botón para enviar el formulario */}
-        <Button type="submit" variant="contained" fullWidth>
+        <Button onClick={handleSentOtp} fullWidth variant='contained' sx={{ py: "11px" }}>
+          send otp
+        </Button>
+
+        <Button onClick={()=>formik.handleSubmit()} fullWidth variant='contained' sx={{ py: "11px" }}>
           Login
         </Button>
       </form>

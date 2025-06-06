@@ -5,18 +5,31 @@ import { ThemeProvider } from '@emotion/react';
 import customeTheme from './Theme/customeTheme';
 import Home from './customer/pages/home/Home';
 import BecomeSeller from './customer/pages/Become Seller/BecomeSeller';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Account from './customer/pages/Account/Account';
 import Product from './customer/pages/Products/Product';
 import SellerDashboard from './seller/pages/SellerDashboard/SellerDashboard';
 import Checkout from './customer/pages/Checkout/Checkout';
 import AdminDashBoard from './admin/pages/DashBoard/AdminDashBoard';
 import { fetchProducts } from './State/fetchProducts';
+import { useAppDispatch, useAppSelector } from './State/Store';
+import { fetchSellerProfile } from './State/seller/sellerSlice';
 
 function App() {
-  useEffect(() => {
-  fetchProducts();
+const dispatch = useAppDispatch();
+const { seller } = useAppSelector(store => store);
+const navigate = useNavigate();
+
+useEffect(() => {
+  dispatch(fetchSellerProfile(localStorage.getItem("jwt") || ""));
 }, []);
+
+useEffect(() => {
+  if (seller.profile) {
+    navigate("/seller");
+  }
+}, [seller.profile]);
+
 
   return (
     <>
