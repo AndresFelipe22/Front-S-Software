@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {api} from "../../config/api";
 
-// Obtiene el perfil del vendedor autenticado usando JWT.
+// Thunk para obtener el perfil del vendedor autenticado.
+// Parámetro: jwt (string) - token de autenticación JWT.
+// Realiza una petición GET a la API y retorna los datos del perfil.
 export const fetchSellerProfile = createAsyncThunk(
   "/sellers/fetchSellerProfile",
   async (jwt: string, { rejectWithValue }) => {

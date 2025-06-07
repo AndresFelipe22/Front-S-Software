@@ -7,6 +7,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
+import { fetchSellerProducts } from '../../../State/seller/sellerProductSlice';
+import { Product } from '../../../types/ProductTypes';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,6 +49,12 @@ const rows =[
 ]
 
 export default function ProductTable() {
+  const dispatch = useAppDispatch();
+  const {sellerProduct} =useAppSelector(store=>store)
+  React.useEffect(() => {
+    dispatch(fetchSellerProducts(localStorage.getItem('jwt')));
+  }, []);
+
 
   return (
     <TableContainer component={Paper}>
@@ -62,17 +71,20 @@ export default function ProductTable() {
                 </TableRow>
             </TableHead>
             <TableBody>
-        {rows.map((row) => (
-    <StyledTableRow key={row.name}>
-        <StyledTableCell component="th" scope="row">           
-            {row.name}
+        {sellerProduct.products.map((item:Product) => (
+    <StyledTableRow key={item.id}>
+        <StyledTableCell component="th" scope="row">  
+          <div className='flex gap-1 flex-wrap'>
+            {item.images.map((images)=><img className='w-20 rounded-md' src={images} alt={item.title} />)}         
+          </div>
+            {/* {sellerProduct.products} */}
         </StyledTableCell>   
-        <StyledTableCell align="right">{row.fat}</StyledTableCell>
-        <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-        <StyledTableCell align="right">{row.protein}</StyledTableCell>
-        <StyledTableCell align="right">{row.fat}</StyledTableCell>
-        <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-        <StyledTableCell align="right">{row.protein}</StyledTableCell>
+        <StyledTableCell align="right">{}</StyledTableCell>
+        <StyledTableCell align="right">{}</StyledTableCell>
+        <StyledTableCell align="right">{}</StyledTableCell>
+        <StyledTableCell align="right">{}</StyledTableCell>
+        <StyledTableCell align="right">{}</StyledTableCell>
+        <StyledTableCell align="right">{}</StyledTableCell>
     </StyledTableRow>
 ))}
             </TableBody>
