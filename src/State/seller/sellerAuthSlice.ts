@@ -1,7 +1,8 @@
-// Slice para autenticación y sesión de vendedores.
+// Slice para autenticación y sesión de vendedores. Maneja el login y almacenamiento del JWT en localStorage.
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../config/api";
 
+// Acción asíncrona para login de vendedor. Guarda el JWT en localStorage.
 export const sellerLogin = createAsyncThunk<any, any>(
   "/sellerAuth/signin",
   async (LoginRequest , { rejectWithValue }) => {

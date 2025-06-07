@@ -22,6 +22,8 @@ const store = configureStore({
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof rootReducer>;
 
+// Hook tipado para despachar acciones en toda la app
 export const useAppDispatch = () => useDispatch<AppDispatch>();
+// Hook tipado para seleccionar estado desde el store
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export default store;

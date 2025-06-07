@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../../config/api";
 import { Product } from "../../types/ProductTypes";
 
+// Slice para productos del vendedor. Maneja la obtención y creación de productos asociados al seller autenticado.
+
 // Obtiene todos los productos del vendedor autenticado.
 export const fetchSellerProducts = createAsyncThunk<Product[], any>(
   "/sellers/fetchSellerProducts",

@@ -26,6 +26,7 @@ import { furnitureLevelTwo } from "../../../data/category/level two/furnitureLev
 import { furnitureLevelThree } from "../../../data/category/level three/furnitureLevelThree";
 import { uploadToCoudinary } from "../../../Util/uploadToCoudinary";
 import Grid2 from '@mui/material/Unstable_Grid2';
+import { useAppDispatch } from "../../../State/Store";
 
 const categoryTwo: { [key: string]: any[] } = {
   men: menLevelTwo,
@@ -47,6 +48,8 @@ const categoryThree: { [key: string]: any[] } = {
 
 const AddProductForm = () => {
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [snackbarOpen, setOpenSnackbar] = useState(false);
+  const dispatch = useAppDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -89,7 +92,9 @@ const AddProductForm = () => {
       return child.parentCategoryId === parentCategoryId;
     });
   };
-
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
   return (
     <div>
       <form onSubmit={formik.handleSubmit} className="space-y-4 p-4">

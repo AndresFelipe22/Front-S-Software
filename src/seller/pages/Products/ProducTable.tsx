@@ -6,10 +6,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material';
+import { Button, IconButton, styled } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../State/Store';
 import { fetchSellerProducts } from '../../../State/seller/sellerProductSlice';
 import { Product } from '../../../types/ProductTypes';
+import { Edit } from '@mui/icons-material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -79,12 +80,18 @@ export default function ProductTable() {
           </div>
             {/* {sellerProduct.products} */}
         </StyledTableCell>   
-        <StyledTableCell align="right">{}</StyledTableCell>
-        <StyledTableCell align="right">{}</StyledTableCell>
-        <StyledTableCell align="right">{}</StyledTableCell>
-        <StyledTableCell align="right">{}</StyledTableCell>
-        <StyledTableCell align="right">{}</StyledTableCell>
-        <StyledTableCell align="right">{}</StyledTableCell>
+        <StyledTableCell align="right">{item.title}</StyledTableCell>
+        <StyledTableCell align="right">{item.mrpPrice}</StyledTableCell>
+        <StyledTableCell align="right">{item.sellingPrice}</StyledTableCell>
+        <StyledTableCell align="right">{item.color}</StyledTableCell>
+        <StyledTableCell align="right">{
+          <Button size='small'>
+            En stock
+          </Button>}</StyledTableCell>
+        <StyledTableCell align="right">{
+           <IconButton color='primary' size='small'>
+            <Edit/>
+          </IconButton>}</StyledTableCell>
     </StyledTableRow>
 ))}
             </TableBody>
