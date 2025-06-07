@@ -14,7 +14,7 @@ export interface Product {
   category?: Category;
   seller?: Seller;
   createdAt?: Date;
-  sizes:String
+  sizes: String;
 }
 
 interface Category {
@@ -23,5 +23,4 @@ interface Category {
   categoryId: string;
   parentCategory?: Category;
   level: number;
-
 }

@@ -11,34 +11,42 @@ import Product from './customer/pages/Products/Product';
 import SellerDashboard from './seller/pages/SellerDashboard/SellerDashboard';
 import Checkout from './customer/pages/Checkout/Checkout';
 import AdminDashBoard from './admin/pages/DashBoard/AdminDashBoard';
-import { fetchProducts } from './State/fetchProducts';
 import { useAppDispatch, useAppSelector } from './State/Store';
 import { fetchSellerProfile } from './State/seller/sellerSlice';
+import Auth from './customer/pages/Auth/Auth';
 
 function App() {
-const dispatch = useAppDispatch();
-const { seller } = useAppSelector(store => store);
-const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { seller } = useAppSelector(store => store);
+  const auth = {};
+  const navigate = useNavigate();
 
-useEffect(() => {
-  dispatch(fetchSellerProfile(localStorage.getItem("jwt") || ""));
-}, []);
+  useEffect(() => {
+    dispatch(fetchSellerProfile(localStorage.getItem("jwt") || ""));
+  }, [dispatch]);
 
-useEffect(() => {
-  if (seller.profile) {
-    navigate("/seller");
-  }
-}, [seller.profile]);
+  useEffect(() => {
+    if (seller.profile) {
+      navigate("/seller");
+    }
+  }, [seller.profile, navigate]);
+
+  useEffect(() => {
+    // dispatch(fetchProducts());
+  }, [dispatch])
 
 
+ console.log("User profile", auth)
   return (
     <>
       <ThemeProvider theme={customeTheme}>
         <div>
+          {/* <h1 className='py-10 text 5xl'> name :  {auth.user?.email}</h1> */}
           <Navbar/>
           <Routes>
             <Route path="/" element={<Home/>} />
-            <Route path="/products/:Category" element={<Product />} />
+            <Route path="/login" element={<Auth/>} />
+            <Route path="/products/:category" element={<Product />} />
             {/*<Route path="/reviews/:productId" element={<Review/>} /> */}
             <Route path="/product-details/:categoryId/:name/:productId" element={<Product />} />
             {/*<Route path='/cart' element={<Cart/>} />*/}

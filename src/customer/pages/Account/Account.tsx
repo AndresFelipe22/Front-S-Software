@@ -5,6 +5,8 @@ import Orders from './Orders';
 import OrderDetails from './OrderDetails';
 import UserDetails from './UserDetails';
 import Address from './Address';
+import { logut } from '../../../State/seller/AuthSlice';
+import { useAppDispatch } from '../../../State/Store';
 
 
 const menu = [
@@ -20,8 +22,15 @@ const menu = [
 const Account = () => {
   const navigate = useNavigate();
   const location=useLocation();
+  const dispatch = useAppDispatch();
 
-  const handleClick = (item:any) => navigate(item.path);
+  const handleClick = (item:any) => {
+    if(item.path === '/') {
+      dispatch(logut({}));
+    }
+    navigate(item.path);
+    
+  } 
   // const handleClick = (item:any) => { 
   return (
     <div className='px-5 lg:px-52 min-h-screen mt-10'>

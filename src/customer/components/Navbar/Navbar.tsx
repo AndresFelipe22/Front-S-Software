@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
@@ -90,17 +89,7 @@ const Navbar = () => {
           </IconButton>
 
           {/* Usuario autenticado: muestra avatar y nombre, si no, botón de login */}
-          {true ? (
-            <Button onClick={()=>navigate("/account/orders")} className="flex items-center gap-2">
-              <Avatar
-                sx={{ width: 29, height: 29 }}
-                src="https://cdn.pixabay.com/photo/2015/04/15/09/28/head-723540_640.jpg"
-              />
-              <h1 className="font-semibold hidden lg:block">Andres</h1>
-            </Button>
-          ) : (
-            <Button variant="contained">Login</Button>
-          )}
+          <Button onClick={()=>navigate("/login")} variant="contained">Login</Button>
 
           {/* Botón para vendedores solo en pantallas grandes */}
           {isLarge && (

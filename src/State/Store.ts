@@ -3,14 +3,16 @@ import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import { thunk } from "redux-thunk";
 import sellerSlice from "./seller/sellerSlice";
 import sellerProductSlice from "./seller/sellerProductSlice";
+import productSlice from"./customer/ProductSlice";
 
 // Configuración principal de Redux Store.
 // Define rootReducer y aplica middleware thunk.
 // Exporta hooks personalizados para usar el store en la app.
 
 const rootReducer = combineReducers({
-  seller:sellerSlice,
-  sellerProduct:sellerProductSlice
+  seller: sellerSlice,
+  sellerProduct: sellerProductSlice,
+  product: productSlice,
 });
 
 const store = configureStore({
