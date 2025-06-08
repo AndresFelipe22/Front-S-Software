@@ -2,7 +2,7 @@ import { Button, CircularProgress, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import { useAppDispatch } from '../../../State/Store';
-import { sendLoginSignupOtp } from '../../../State/AuthSlice';
+import { sendLoginSignUpOtp } from '../../../State/AuthSlice';
 
 const RegisterForm = () => {
     const [otpSent, setOtpSent] = useState(false);
@@ -25,7 +25,7 @@ const RegisterForm = () => {
     });
 
     const handleResendOTP = () => {
-        dispatch(sendLoginSignupOtp({ email: formik.values.email }))
+        dispatch(sendLoginSignUpOtp({ email: formik.values.email }))
         setTimer(30);
         setIsTimerActive(true);
     };

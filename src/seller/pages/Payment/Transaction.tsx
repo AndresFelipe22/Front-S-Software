@@ -7,6 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
+import { fetchTransactionsBySeller } from '../../../State/seller/transactionSlice';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,6 +46,12 @@ const rows =[
 ]
 
 export default function TransactionTable() {
+  const dispatch=useAppDispatch()
+  const {transactions}=useAppSelector(store=>store)
+
+  React.useEffect(()=>{
+    dispatch(fetchTransactionsBySeller(localStorage.getItem("jwt") || ""))
+  },[])
 
   return (
     <TableContainer component={Paper}>
@@ -56,16 +64,19 @@ export default function TransactionTable() {
                 </TableRow>
             </TableHead>
             <TableBody>
-        {rows.map((row) => (
-    <StyledTableRow key={row.name}>
-        <StyledTableCell component="th" scope="row">           
-            {row.name}
-        </StyledTableCell>
-        <StyledTableCell align="right">{row.order}</StyledTableCell>
-        <StyledTableCell align="right">{row.amount}</StyledTableCell>
-    </StyledTableRow>
-))}
-            </TableBody>
+      {transactions.transactions.map((item) => (
+        <StyledTableRow key={item.id}>
+          <StyledTableCell component="th" scope="row">
+            {item.date}
+          </StyledTableCell>
+          <StyledTableCell component="th" scope="row">
+            {item.customer.email}
+          </StyledTableCell>
+          <StyledTableCell align="right">{item.order.id}</StyledTableCell>
+          <StyledTableCell align="right">{item.order.totalSellingPrice}</StyledTableCell>
+        </StyledTableRow>
+      ))}
+    </TableBody>
       </Table>
     </TableContainer>
   );

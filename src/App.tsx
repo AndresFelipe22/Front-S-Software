@@ -4,6 +4,7 @@ import Navbar from './customer/components/Navbar/Navbar';
 import { ThemeProvider } from '@emotion/react';
 import customeTheme from './Theme/customeTheme';
 import Home from './customer/pages/home/Home';
+
 import BecomeSeller from './customer/pages/Become Seller/BecomeSeller';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Account from './customer/pages/Account/Account';
@@ -14,6 +15,12 @@ import AdminDashBoard from './admin/pages/DashBoard/AdminDashBoard';
 import { useAppDispatch, useAppSelector } from './State/Store';
 import { fetchSellerProfile } from './State/seller/sellerSlice';
 import Auth from './customer/pages/Auth/Auth';
+
+import ProductDetails from './customer/pages/PageDetails/ProductDetails';
+import Review from './customer/pages/Review/Review';
+
+
+
 
 function App() {
   const dispatch = useAppDispatch();
@@ -41,6 +48,8 @@ function App() {
     <>
       <ThemeProvider theme={customeTheme}>
         <div>
+
+
           {/* <h1 className='py-10 text 5xl'> name :  {auth.user?.email}</h1> */}
           <Navbar/>
           <Routes>
@@ -56,6 +65,18 @@ function App() {
             <Route path="/seller/*" element={<SellerDashboard />} />
             <Route path="/admin/*" element={<AdminDashBoard />} />
           </Routes>
+
+
+          {/* <Navbar/>*/}
+          {/* <Home/> */}
+          {/* <Product/> */}
+          {/** Aporte mio en el App.tsx, agregar */}
+          {/*<ProductDetails/>*/}
+          {/** Aporte mio en el App.tsx, Se comento el ProductDetails, Info relevante */}
+          <Review/>
+
+          
+          
         </div>
       </ThemeProvider>
     </>

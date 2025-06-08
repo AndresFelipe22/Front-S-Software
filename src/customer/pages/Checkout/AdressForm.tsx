@@ -4,6 +4,9 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { useAppDispatch } from '../../../State/Store';
+import { createOrder } from '../../../State/customer/orderSlice';
+
 import React from 'react';
 // ...existing code...
 
@@ -24,10 +27,11 @@ const AddressFormSchema = Yup.object().shape({
         .required('Ciudad es requerida'),
     state: Yup.string()
         .required('Estado es requerido'),
-    Locality: Yup.string()
+    locality: Yup.string()
         .required('Localidad es requerida'),
 })
-const AdressForm = () => {
+const AdressForm = ({paymentGatway}:any) => {
+        const dispatch= useAppDispatch();
         const formik = useFormik({
         initialValues: {
             name: '',
@@ -36,11 +40,15 @@ const AdressForm = () => {
             address: '',
             city: '',
             state: '',
-            Locality: '',
+            locality: '',
         },
         validationSchema: AddressFormSchema,
         onSubmit: (values) => {
             console.log(values);
+            //Aqui hay modificaciones de pasarela de pago, tener en cuenta
+            dispatch(createOrder({address:values,
+                jwt:localStorage.getItem("jwt") || "",
+                paymentGateway:paymentGatway,}));
         },
     })
   return (
@@ -111,10 +119,10 @@ const AdressForm = () => {
                     fullWidth
                     name='locality'
                     label="Localidad"
-                    value={formik.values.Locality}
+                    value={formik.values.locality}
                     onChange={formik.handleChange}
-                    error={formik.touched.Locality && Boolean(formik.errors.Locality)}
-                    helperText={formik.touched.Locality && formik.errors.Locality}
+                    error={formik.touched.locality && Boolean(formik.errors.locality)}
+                    helperText={formik.touched.locality && formik.errors.locality}
                     />
 
                 </Grid2>

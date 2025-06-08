@@ -4,7 +4,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from '../../../State/Store';
-import { logut } from '../../../State/seller/AuthSlice';
+import { logut } from '../../../State/AuthSlice';
 
 export interface Menu {
     name: string;

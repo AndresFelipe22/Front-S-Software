@@ -5,7 +5,7 @@ import Orders from './Orders';
 import OrderDetails from './OrderDetails';
 import UserDetails from './UserDetails';
 import Address from './Address';
-import { logut } from '../../../State/seller/AuthSlice';
+import { logut } from '../../../State/AuthSlice';
 import { useAppDispatch } from '../../../State/Store';
 
 

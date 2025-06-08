@@ -24,3 +24,4 @@ interface Category {
   parentCategory?: Category;
   level: number;
 }
+

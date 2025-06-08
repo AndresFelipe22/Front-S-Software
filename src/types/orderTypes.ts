@@ -1,31 +1,48 @@
-export interface ShippingAddress {
-  name: string;
-  address: string;
-  city: string;
-  state: string;
-  pinCode: string;
-  mobile: string;
+
+import { Product } from './ProductTypes';
+import { Address, User } from './userTypes';
+
+export interface OrderState {
+    orders: Order[];
+    orderItem:OrderItem | null;
+    currentOrder: Order | null;
+    paymentOrder: any | null;
+    loading: boolean;
+    error: string | null;
+    orderCanceled: boolean
 }
 
-export interface Product {
-  id: number;
-  title: string;
-  sellingPrice: number;
-  color: string;
-  images: string[];
+export interface Order {
+    id: number;
+    orderId: string;
+    user: User;
+    sellerId: number;
+    orderItems: OrderItem[];
+    orderDate: string; 
+    shippingAddress: Address;
+    paymentDetails: any;
+    totalMrpPrice: number;
+    totalSellingPrice?: number; // Optional field
+    discount?: number; // Optional field
+    orderStatus: OrderStatus;
+    totalItem: number;
+    deliverDate:string;
+}
+
+export enum OrderStatus {
+    PENDING = 'PENDING',
+    SHIPPED = 'SHIPPED',
+    DELIVERED = 'DELIVERED',
+    CANCELLED = 'CANCELLED'
 }
 
 export interface OrderItem {
-  id: number;
-  product: Product;
-  size: string;
-}
-
-export type OrderStatus = 'PENDING' | 'CONFIRMED' | 'PLACED' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
-
-export interface Order {
-  id: number;
-  orderItems: OrderItem[];
-  shippingAddress: ShippingAddress;
-  orderStatus: OrderStatus;
+    id: number;
+    order: Order;
+    product: Product;
+    size: string;
+    quantity: number;
+    mrpPrice: number;
+    sellingPrice: number; 
+    userId: number;
 }

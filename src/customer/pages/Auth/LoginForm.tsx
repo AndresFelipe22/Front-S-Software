@@ -2,7 +2,7 @@ import { Button, CircularProgress, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import { useAppDispatch } from '../../../State/Store';
-import { sendLoginSignupOtp, signin } from '../../../State/AuthSlice';
+import { sendLoginSignUpOtp, signin } from '../../../State/AuthSlice';
 
 const LoginForm = () => {
     const dispatch = useAppDispatch();
@@ -24,13 +24,13 @@ const LoginForm = () => {
     });
 
     const handleResendOTP = () => {
-        dispatch(sendLoginSignupOtp({ email: formik.values.email }))
+        dispatch(sendLoginSignUpOtp({ email: formik.values.email }))
         setTimer(30);
         setIsTimerActive(true);
     };
 
     const handleSendOtp = () => {
-        dispatch(sendLoginSignupOtp({ email: formik.values.email }))
+        dispatch(sendLoginSignUpOtp({ email: formik.values.email }))
         setTimer(30);
         setIsTimerActive(true);
     };

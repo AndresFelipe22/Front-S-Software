@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { useAppDispatch } from '../State/Store';
-import { logut } from '../State/seller/AuthSlice';
+import { logut } from '../State/AuthSlice';
 
 
 interface DrawerListProp {

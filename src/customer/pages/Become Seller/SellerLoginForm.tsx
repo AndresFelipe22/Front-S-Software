@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik'; // Hook para manejar formularios fácilmente
 import { TextField, Button } from '@mui/material'; // Componentes de Material UI
 import { useAppDispatch } from '../../../State/Store';
-import { sendLoginSignupOtp, signin } from '../../../State/AuthSlice';
 import { sellerLogin } from '../../../State/seller/sellerAuthSlice';
+import { sendLoginSignUpOtp, signin } from '../../../State/AuthSlice';
 
 // Componente para el formulario de login del vendedor
 const SellerLoginForm = () => {
@@ -18,7 +18,7 @@ const SellerLoginForm = () => {
     },
     onSubmit: (values) => {
       // Acción al enviar el formulario: mostramos los valores en consola
-      console.log('form data', values);
+      //console.log('form data', values);
       //values.otp=Number(values.otp)
       dispatch(sellerLogin({email: values.email, otp: values.otp}))
     },
@@ -32,11 +32,11 @@ const SellerLoginForm = () => {
         //setIsTimerActive(true);};
 
   const handleSentOtp=()=>{
-      dispatch(sendLoginSignupOtp({ email: formik.values.email }))
+      dispatch(sendLoginSignUpOtp({ email: formik.values.email }))
     };
   
   const handleLogin=()=>{
-    // dispatch(signin({ email: }))
+     formik.handleSubmit()
   };
 
 

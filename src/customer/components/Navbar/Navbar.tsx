@@ -80,7 +80,7 @@ const Navbar = () => {
             <SearchIcon />
           </IconButton>
           {/* Favoritos */}
-          <IconButton aria-label="Favoritos">
+          <IconButton onClick={()=>navigate("/wishlist")} aria-label="Favoritos">
             <FavoriteBorder sx={{ fontSize: 29 }} />
           </IconButton>
           {/* Carrito */}
