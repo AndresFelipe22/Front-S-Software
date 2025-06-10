@@ -5,17 +5,6 @@ import { Order, OrderStatus } from '../../types/orderTypes';
 import { api } from '../../config/api';
 
 
-interface SellerOrderState {
-  orders: Order[];
-  loading: boolean;
-  error: string | null;
-}
-
-const initialState: SellerOrderState = {
-  orders: [],
-  loading: false,
-  error: null,
-};
 
 // Thunks for async actions
 export const fetchSellerOrders = createAsyncThunk<Order[], string>(
@@ -68,6 +57,19 @@ export const deleteOrder = createAsyncThunk<any, { jwt: string, orderId: number 
     }
   }
 );
+
+interface SellerOrderState {
+  orders: Order[];
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: SellerOrderState = {
+  orders: [],
+  loading: false,
+  error: null,
+};
+
 
 const sellerOrderSlice = createSlice({
   name: 'sellerOrders',

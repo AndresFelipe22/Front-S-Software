@@ -5,11 +5,16 @@ import { Button } from '@mui/material';
 import { Favorite, ModeComment } from '@mui/icons-material';
 import { Product } from '../../../types/ProductTypes';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../../State/Store';
+import { addProductToWishlist } from '../../../State/customer/wishlistSlice';
 
 const ProductCard = ({ item }: { item: Product }) => {
+  // Estado para la imagen actual del carrusel
   const [currentImage, setCurrentImage] = useState(0);
+  // Estado para saber si el mouse está sobre la tarjeta
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
+  const dispatch=useAppDispatch();
 
   useEffect(() => {
     let interval: any;
@@ -22,6 +27,11 @@ const ProductCard = ({ item }: { item: Product }) => {
     }
     return () => clearInterval(interval);
   }, [isHovered, item.images.length]);
+
+  const handleWishlist = (event:any)=>{
+      event.stopPropagation()
+      item.id && dispatch(addProductToWishlist({productId: item.id} ))
+    }
 
   return (
     <>
@@ -47,7 +57,7 @@ const ProductCard = ({ item }: { item: Product }) => {
           {isHovered && (
             <div className='indicator flex flex-col items-center space-y-2'>
               <div className='flex gap-4'>
-                <Button variant='contained' color='secondary'>
+                <Button onClick={handleWishlist} variant='contained' color='secondary'>
                   <Favorite sx={{ color: "#35A12C" }} />
                 </Button>
                 <Button variant='contained' color='secondary'>

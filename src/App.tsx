@@ -18,6 +18,7 @@ import Auth from './customer/pages/Auth/Auth';
 
 import ProductDetails from './customer/pages/PageDetails/ProductDetails';
 import Review from './customer/pages/Review/Review';
+import Wishlist from './customer/Wishlist/Wishlist';
 
 
 
@@ -59,6 +60,7 @@ function App() {
             {/*<Route path="/reviews/:productId" element={<Review/>} /> */}
             <Route path="/product-details/:categoryId/:name/:productId" element={<Product />} />
             {/*<Route path='/cart' element={<Cart/>} />*/}
+            <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/become-seller" element={<BecomeSeller />} />
             <Route path="/account/*" element={<Account />} />

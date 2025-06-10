@@ -128,7 +128,7 @@ const Checkout = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                     {/**Otra implemntacion de la pasarela, tener en cuenta */}
+                     {/**Otra implementacion de la pasarela, tener en cuenta */}
                     <AdressForm paymentGatway={paymentGatway}/>
 
                 </Box>

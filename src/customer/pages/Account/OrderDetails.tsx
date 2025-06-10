@@ -9,7 +9,7 @@ import { fetchOrderById, fetchOrderItemById } from '../../../State/customer/orde
 
 const OrderDetails = () => {
     const navigate = useNavigate();
-    const dispatch=useAppDispatch();
+    const dispatch= useAppDispatch();
     const {orderId,orderItemId}=useParams();
     const {orders} = useAppSelector(store => store);
 

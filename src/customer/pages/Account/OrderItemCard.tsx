@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const OrderItemCard = ({item,order}:{item:OrderItem,order:Order}) => {
   const navigate=useNavigate();
   return (
-    <div onClick={()=>navigate(`/account/order/${order.id}/${item.id}`)} className='text-sm bg-white p-5 apce-y-4 border rounded-md cursor-pointer'>
+    <div onClick={()=>navigate(`/account/order/${order.id}/${item.id}`)} className='text-sm bg-white p-5 space-y-4 border rounded-md cursor-pointer'>
       <div className='flex items-center gap-5'>
         <div>
           <Avatar sizes='small' sx={{bgcolor:teal[800]}}>

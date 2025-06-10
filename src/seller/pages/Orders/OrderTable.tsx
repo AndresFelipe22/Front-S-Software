@@ -124,8 +124,10 @@ export default function OrderTable() {
             {item.orderStatus}
           </span>
         </StyledTableCell>
+
         <StyledTableCell align="right">
-          <Button size='small' color='primary' onClick={(e)=>handleClick(e,item.id)}>
+          <Button size='small' color='primary' 
+            onClick={(e)=>handleClick(e,item.id)}>
             status
           </Button>
           <Menu 

@@ -35,6 +35,7 @@ const rootReducer = combineReducers({
   sellerProduct: sellerProductSlice,
   
   
+  
 });
 
 const store = configureStore({
