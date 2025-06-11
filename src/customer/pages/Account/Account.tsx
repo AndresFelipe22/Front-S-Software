@@ -5,7 +5,7 @@ import Orders from './Orders';
 import OrderDetails from './OrderDetails';
 import UserDetails from './UserDetails';
 import Address from './Address';
-import { logut } from '../../../State/AuthSlice';
+import { logout } from '../../../State/AuthSlice';
 import { useAppDispatch } from '../../../State/Store';
 
 
@@ -26,7 +26,7 @@ const Account = () => {
 
   const handleClick = (item:any) => {
     if(item.path === '/') {
-      dispatch(logut({}));
+      dispatch(logout({}));
     }
     navigate(item.path);
     

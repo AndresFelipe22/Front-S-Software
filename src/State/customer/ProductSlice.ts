@@ -4,29 +4,25 @@ import { Product } from "../../types/ProductTypes";
 import { RootState } from '../Store';
 
 const API_URL = "/products";
-
-export const fetchProductById = createAsyncThunk<any, string>("products/fetchProductById",
+export const fetchProductById = createAsyncThunk<Product,number>("products/fetchProductById",
   async (productId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`${API_URL}/${productId}`);
-
+      const response = await api.get( `${API_URL}/${productId}`);
+    
       const data=response.data;
-      console.log("data:", data);
+      console.log("Product details data: ", data);
       return data
-      
-      
     } catch (error: any) {
-      console.log("error ", error);
-      return rejectWithValue(error.message);
+      console.log("error: ", error);
+    rejectWithValue(error.message);
     }
   }
 )
 
-
 export const searchProduct = createAsyncThunk("products/searchProduct",
   async (query, { rejectWithValue }) => {
     try {
-      const response = await api.get(`${API_URL}/search`, {
+      const response = await api.get(`${API_URL}/search`,  {
         params: { 
             query 
         },
@@ -45,20 +41,21 @@ export const searchProduct = createAsyncThunk("products/searchProduct",
 export const fetchAllProduct=createAsyncThunk<any,any>(
   "products/fetchAllProducts",
   async (params, { rejectWithValue }) => {
+
     try {
-      const response = await api.get(`${API_URL}` ,{
+      const response = await api.get('/products' ,{
         params:{
           ...params,
           pageNumber: params.pageNumber || 0
         }
       });
       const data=response.data;
-      console.log("All product data:", data)
+      console.log("All product data:" , data)
       return data
     } catch (error: any) {
-        console.log("error ", error);
-        rejectWithValue(error.message);
-        }
+        console.log("error " +  error);
+       // rejectWithValue(error.message);
+     }
     }
 )
 
@@ -76,7 +73,7 @@ const initialState: ProductState = {
   product: null,
   products: [],
   paginatedProducts: null,
-  totalPages: 0,
+  totalPages: 1,
   loading: false,
   error: null,
   searchProduct: []
@@ -88,47 +85,47 @@ const productSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchProductById.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      builder.addCase(fetchProductById.fulfilled, (state, action) => {
-          state.product = action.payload;
-          state.loading = false;
-        }
-      )
-      builder.addCase(fetchProductById.rejected, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchProductById.fulfilled, (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
+    });
+    builder.addCase(fetchProductById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    builder.addCase(
+      searchProduct.fulfilled,
+      (state, action: PayloadAction<Product[]>) => {
+        state.searchProduct = action.payload;
         state.loading = false;
-        state.error = action.payload;
-      })
-      builder.addCase(
-        searchProduct.fulfilled,
-        (state, action: PayloadAction<Product[]>) => {
-          state.searchProduct = action.payload;
-          state.loading = false;
-        }
-      )
-      builder.addCase(searchProduct.rejected, (state, action) => {
+      }
+    );
+    builder.addCase(searchProduct.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message || "Failed to search products";
+    });
+
+    builder.addCase(getAllProducts.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      getAllProducts.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        state.paginatedProducts = action.payload;
+        state.products = action.payload.content;
+        state.totalPages = action.payload.totalPages;
         state.loading = false;
-        state.error = action.error.message || "Failed to search products";
-      })
-      builder.addCase(getAllProducts.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      builder.addCase(
-        getAllProducts.fulfilled,
-        (state, action: PayloadAction<any>) => {
-          state.paginatedProducts = action.payload;
-          state.products = action.payload.content;
-          state.totalPages=action.payload.totalPages
-          state.loading = false;
-          console.log("-----" ,  action.payload.totalPages)
-        }
-      )
-      builder.addCase(getAllProducts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || "Failed to fetch products";
-      });
+        console.log("-----", action.payload.totalPages);
+      }
+    );
+    builder.addCase(getAllProducts.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message || "Failed to fetch products";
+    });
   },
 });
 

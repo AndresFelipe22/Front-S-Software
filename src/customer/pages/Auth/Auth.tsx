@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import LoginForm from './LoginForm'
 import { Alert, Button, Snackbar } from '@mui/material';
 import RegisterForm from './RegisterForm';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../State/Store';
+
 
 const Auth = () => {
-    const [isLoginPage, setIsLoginPage] = useState(true);
+    const [isLogin, setIsLogin] = useState(true);
     const handleCloseSnackbar = () => setSnackbarOpen(false)
-    const auth = { otpSent: false, error: undefined };
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+   const auth = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
         if (auth.otpSent || auth.error) {
@@ -21,11 +24,11 @@ const Auth = () => {
             <div className='max-w-md h-[85vh] rounded-md border shadow-lg '>
                 <img className='w-full rounded-t-md' src="/Logo software-s.png" alt="Logo Software S" style={{ maxWidth: 80, margin: '0 auto', display: 'block' }} />
                 <div className='mt-8 px-10'>
-                    {isLoginPage ? <LoginForm /> : <RegisterForm />}
-                    <div className='flex flex-col items-center gap-2 justify-center mt-5'>
-                        <p>¿Aún no tienes una cuenta?</p>
-                        <Button size='small' onClick={() => setIsLoginPage(!isLoginPage)}>
-                            {isLoginPage ? "Crear cuenta" : "Iniciar sesión"}
+                    {isLogin ? <LoginForm /> : <RegisterForm />}
+                    <div className='flex flex-col items-center gap-1 justify-center mt-5'>
+                        <p>{isLogin && "Don't"}Aún no tienes una cuenta?</p>
+                        <Button size='small' onClick={() => setIsLogin(!isLogin)}>
+                            {isLogin ? "Crear cuenta" : "Iniciar sesión"}
                         </Button>
                     </div>
                 </div>

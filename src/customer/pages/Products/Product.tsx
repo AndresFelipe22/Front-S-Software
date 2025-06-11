@@ -39,6 +39,14 @@ const Product = () => {
     const color = searchParam.get("color");
     const minDiscount = searchParam.get("discount") ? Number(searchParam.get("discount")) : undefined;
     const pageNumber = page - 1;
+
+    const newFilter={
+      color:color || "",
+      minPrice : minPrice?Number(minPrice):undefined,
+      maxPrice : maxPrice?Number(maxPrice):undefined,
+      minDiscount,
+    pageNumber
+    }
     dispatch(getAllProducts({
       category,
       color: color || undefined,

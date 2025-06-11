@@ -26,7 +26,7 @@ const ProductDetails = () => {
 
     useEffect(() => {
         if (productId) {
-            dispatch(fetchProductById(productId));
+            dispatch(fetchProductById (Number(productId)));
         }
     }, [productId, dispatch]);
 

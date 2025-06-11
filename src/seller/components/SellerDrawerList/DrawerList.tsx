@@ -12,11 +12,13 @@ interface MenuItem {
 interface DrawerListProps {
     menu: MenuItem[];
     menu2: MenuItem[];
+    toggleDrawer?: () => void;
 }
 
-const DrawerList = ({ menu, menu2 }: DrawerListProps) => {
+const DrawerList = ({ menu, menu2, toggleDrawer }: DrawerListProps) => {
     const location = useLocation();
     const navigate = useNavigate();
+
     return (
         <div className='h-full'>
             <div className='flex flex-col justify-between h-full w-[300px] border-r py-5'>
@@ -24,7 +26,10 @@ const DrawerList = ({ menu, menu2 }: DrawerListProps) => {
                     <div className="space-y-2">
                         {menu.map((item) => (
                             <div
-                                onClick={() => navigate(item.path)}
+                                onClick={() => {
+                                    navigate(item.path);
+                                    if (toggleDrawer) toggleDrawer();
+                                }}
                                 className='pr-9 cursor-pointer'
                                 key={item.path}
                             >
@@ -41,7 +46,10 @@ const DrawerList = ({ menu, menu2 }: DrawerListProps) => {
                     <div className="space-y-2">
                         {menu2.map((item) => (
                             <div
-                                onClick={() => navigate(item.path)}
+                                onClick={() => {
+                                    navigate(item.path);
+                                    if (toggleDrawer) toggleDrawer();
+                                }}
                                 className='pr-9 cursor-pointer'
                                 key={item.path}
                             >

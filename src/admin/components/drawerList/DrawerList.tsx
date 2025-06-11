@@ -4,7 +4,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from '../../../State/Store';
-import { logut } from '../../../State/AuthSlice';
+import { logout } from '../../../State/AuthSlice';
 
 export interface Menu {
     name: string;
@@ -25,7 +25,7 @@ const DrawerList = ({ toggleDrawer, menu, menu2 }: DrawerListProps) => {
     const dispatch = useAppDispatch();
 
     const handleLogout = () => {
-        dispatch(logut({}));
+        dispatch(logout({}));
         if (toggleDrawer) toggleDrawer();
     };
 

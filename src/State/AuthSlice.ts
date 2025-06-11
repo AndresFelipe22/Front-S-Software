@@ -17,12 +17,24 @@ export const sendLoginSignUpOtp = createAsyncThunk(
 
 export const signin = createAsyncThunk<any, any>(
   "/auth/signin",
-  async (LoginRequest , { rejectWithValue }) => {
+  async (loginRequest , { rejectWithValue }) => {
     try {
-      const response = await api.post("/auth/signin", LoginRequest);
+      const response = await api.post("/auth/signin", loginRequest);
       console.log("login otp ", response.data);
     } catch (error) {
       console.log("error - - -", error);
+    }
+  }
+);
+
+export const logout = createAsyncThunk<any,any>("/auth/logout",
+  async (navigate, { rejectWithValue }) => {
+    try {
+      localStorage.clear();
+      console.log("logout success");
+      navigate("/");
+    } catch (error) {
+      console.log("error ---", error);
     }
   }
 );
@@ -59,17 +71,7 @@ export const fetchUserProfile = createAsyncThunk<any, any>(
   }
 );
 
-export const logut = createAsyncThunk<any, any>(
-  "/auth/logout",
-  async (_, { rejectWithValue }) => {
-    try {
-      localStorage.clear();
-      console.log("logout success");
-    } catch (error) {
-      console.log("error ---", error);
-    }
-  }
-);
+
 
 interface AuthState {
   jwt: string | null;
@@ -110,7 +112,7 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.isLoggedIn = true;
     });
-    builder.addCase(logut.fulfilled, (state) => {
+    builder.addCase(logout.fulfilled, (state) => {
       state.jwt = null;
       state.isLoggedIn = false;
       state.user = null;

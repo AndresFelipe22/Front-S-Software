@@ -75,7 +75,7 @@ function App() {
           {/** Aporte mio en el App.tsx, agregar */}
           {/*<ProductDetails/>*/}
           {/** Aporte mio en el App.tsx, Se comento el ProductDetails, Info relevante */}
-          <Review/>
+          {/**<Review/>*/}
 
           
           
