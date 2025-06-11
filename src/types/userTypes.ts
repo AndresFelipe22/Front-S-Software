@@ -25,4 +25,9 @@ export interface User {
     role: UserRole;
     addresses?: Address[];
 }
-
+export interface UserState {
+    user: User | null;
+    loading: boolean;
+    error: string | null;
+    profileUpdated: boolean;
+}

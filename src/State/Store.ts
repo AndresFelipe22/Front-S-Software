@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
-import { thunk } from "redux-thunk";
 import sellerSlice from "./seller/sellerSlice";
 import sellerProductSlice from "./seller/sellerProductSlice";
 import productSlice from"./customer/ProductSlice";
@@ -11,6 +10,13 @@ import authSlice from "./AuthSlice"
 import cartSlice from "./customer/cartSlice"
 import OrderSlice from "./customer/orderSlice"
 import CouponSlice from "./customer/couponSlice"
+import UserSlice from "./customer/UserSlice";
+import customerSlice from "./customer/CustomerSlice";
+import ReviewSlice from "./customer/ReviewSlice";
+import sellerAuthSlice from "./seller/sellerAuthSlice";
+import dealSlice from "./admin/DealSlice";
+import adminSlice from "./admin/AdminSlice";
+import adminCouponSlice from "./admin/AdminCouponSlice";
 
 
 
@@ -20,12 +26,15 @@ import CouponSlice from "./customer/couponSlice"
 
 const rootReducer = combineReducers({
   // customer
+  user: UserSlice,
   product: productSlice,
   auth: authSlice,
   wishlist: wishlistSlice,
   cart: cartSlice,
   orders: OrderSlice,
   coupone: CouponSlice,
+  review: ReviewSlice,
+  homePage: customerSlice,
 
 
   // seller
@@ -33,12 +42,15 @@ const rootReducer = combineReducers({
   seller: sellerSlice,
   sellerOrder: sellerOrderSlice,
   sellerProduct: sellerProductSlice,
+  sellerAuth: sellerAuthSlice,
+  
+   // admin
+  adminCoupon: adminCouponSlice,
+  adminDeals: dealSlice,
+  adminHome: adminSlice,
   
   
-  
-});
-
-const store = configureStore({
+});const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => 
     getDefaultMiddleware() //.concat(thunk)

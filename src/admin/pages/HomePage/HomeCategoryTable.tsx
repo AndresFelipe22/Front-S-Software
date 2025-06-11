@@ -29,54 +29,40 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
     }));
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
+interface HomeCategoryTableProps {
+  categories?: Array<{ name: string; image: string; categoryId: string }>;
+
 }
-const rows =[
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-]
 
-export default function HomeCategoryTable() {
-
+export default function HomeCategoryTable({ categories }: HomeCategoryTableProps) {
+  if (!categories || categories.length === 0) return <div>No hay categorías para mostrar.</div>;
   return (
     <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-                <TableRow>                   
-                    <StyledTableCell>No.</StyledTableCell>
-                    <StyledTableCell>Id</StyledTableCell>
-                    <StyledTableCell>Imagen</StyledTableCell>
-                    <StyledTableCell align="right">Categoría</StyledTableCell>
-                    <StyledTableCell align="right">Actualizar</StyledTableCell>                   
-                </TableRow>
-            </TableHead>
-            <TableBody>
-        {rows.map((row) => (
-    <StyledTableRow key={row.name}>
-        <StyledTableCell component="th" scope="row">           
-            {row.name}
-        </StyledTableCell>
-        <StyledTableCell>{row.calories}</StyledTableCell>
-        <StyledTableCell >{row.fat}</StyledTableCell>
-        <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-        <StyledTableCell align="right">
-            <Button variant="outlined" color="primary">
-                <Edit />
-            </Button>
-        </StyledTableCell>
-    </StyledTableRow>
-    ))}
-            </TableBody>
+      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>No.</StyledTableCell>
+            <StyledTableCell>Id</StyledTableCell>
+            <StyledTableCell>Imagen</StyledTableCell>
+            <StyledTableCell align="right">Categoría</StyledTableCell>
+            <StyledTableCell align="right">Actualizar</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {categories.map((cat, idx) => (
+            <StyledTableRow key={cat.categoryId}>
+              <StyledTableCell component="th" scope="row">{idx + 1}</StyledTableCell>
+              <StyledTableCell>{cat.categoryId}</StyledTableCell>
+              <StyledTableCell><img src={cat.image} alt={cat.name} style={{width:40, height:40}} /></StyledTableCell>
+              <StyledTableCell align="right">{cat.name}</StyledTableCell>
+              <StyledTableCell align="right">
+                <Button variant="outlined" color="primary">
+                  <Edit />
+                </Button>
+              </StyledTableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
       </Table>
     </TableContainer>
   );

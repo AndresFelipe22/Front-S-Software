@@ -1,15 +1,19 @@
 import { Button, CircularProgress, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
-import { useAppDispatch } from '../../../State/Store';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
 import { sendLoginSignUpOtp, signin } from '../../../State/AuthSlice';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
     const dispatch = useAppDispatch();
-    const auth = { otpSent: false };
-    const [loading, setLoading] = useState(false);
-    const [timer, setTimer] = useState<number>(30); // Timer state
+    const navigate = useNavigate();
+    const auth = useAppSelector(state => state.auth);
+    const [otp, setOtp] = useState('');
+    const [isOtpSent, setIsOtpSent] = useState(false);
+    const [timer, setTimer] = useState<number>(30);
     const [isTimerActive, setIsTimerActive] = useState<boolean>(false);
+    const [loading, setLoading] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -18,21 +22,25 @@ const LoginForm = () => {
         },
         onSubmit: async (values: any) => {
             setLoading(true);
-            await dispatch(signin(values));
+            await dispatch(signin({ email: values.email, otp, navigate }));
             setLoading(false);
         }
     });
 
+    const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setOtp(e.target.value);
+        formik.setFieldValue('otp', e.target.value);
+    };
+
     const handleResendOTP = () => {
-        dispatch(sendLoginSignUpOtp({ email: formik.values.email }))
+        dispatch(sendLoginSignUpOtp({ email: formik.values.email }));
         setTimer(30);
         setIsTimerActive(true);
     };
 
     const handleSendOtp = () => {
-        dispatch(sendLoginSignUpOtp({ email: formik.values.email }))
-        setTimer(30);
-        setIsTimerActive(true);
+        setIsOtpSent(true);
+        handleResendOTP();
     };
 
     useEffect(() => {
@@ -43,7 +51,7 @@ const LoginForm = () => {
                     if (prev === 1) {
                         clearInterval(interval);
                         setIsTimerActive(false);
-                        return 30; // Reset timer for next OTP request
+                        return 30;
                     }
                     return prev - 1;
                 });
@@ -68,25 +76,40 @@ const LoginForm = () => {
                     error={formik.touched.email && Boolean(formik.errors.email)}
                     helperText={formik.touched.email ? formik.errors.email as string : undefined}
                 />
-                {auth.otpSent && (
+                {isOtpSent && (
                     <div className="space-y-2">
                         <p className="font-medium text-sm">
-                            * Enter OTP sent to your email
+                            * Ingresa el OTP enviado a tu correo
                         </p>
                         <TextField
                             fullWidth
                             name="otp"
-                            label="Otp"
+                            label="OTP"
                             value={formik.values.otp}
-                            onChange={formik.handleChange}
+                            onChange={handleOtpChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.otp && Boolean(formik.errors.otp)}
                             helperText={formik.touched.otp ? formik.errors.otp as string : undefined}
                         />
+                        <p className="text-xs space-x-2 mt-2">
+                            {isTimerActive ? (
+                                <span>Reenviar OTP en {timer} segundos</span>
+                            ) : (
+                                <>
+                                    ¿No recibiste el OTP?{' '}
+                                    <span
+                                        onClick={handleResendOTP}
+                                        className="text-teal-600 cursor-pointer hover:text-teal-800 font-semibold"
+                                    >
+                                        Reenviar OTP
+                                    </span>
+                                </>
+                            )}
+                        </p>
                     </div>
                 )}
                 <div>
-                    {auth.otpSent ? (
+                    {isOtpSent ? (
                         <Button
                             type="submit"
                             fullWidth
@@ -94,7 +117,7 @@ const LoginForm = () => {
                             sx={{ py: "11px" }}
                             disabled={loading}
                         >
-                            {loading ? <CircularProgress size={24} /> : "Login"}
+                            {loading ? <CircularProgress size={24} /> : "Iniciar sesión"}
                         </Button>
                     ) : (
                         <Button
@@ -105,28 +128,13 @@ const LoginForm = () => {
                             sx={{ py: "11px" }}
                             disabled={loading}
                         >
-                            {loading ? <CircularProgress size={24} /> : "send otp"}
+                            {loading ? <CircularProgress size={24} /> : "Enviar OTP"}
                         </Button>
                     )}
-                    <p className="text-xs space-x-2 mt-2">
-                        {isTimerActive ? (
-                            <span>Resend OTP in {timer} seconds</span>
-                        ) : (
-                            <>
-                                Didn’t receive OTP?{" "}
-                                <span
-                                    onClick={handleResendOTP}
-                                    className="text-teal-600 cursor-pointer hover:text-teal-800 font-semibold"
-                                >
-                                    Resend OTP
-                                </span>
-                            </>
-                        )}
-                    </p>
                 </div>
             </form>
         </div>
-    )
+    );
 }
 
 export default LoginForm

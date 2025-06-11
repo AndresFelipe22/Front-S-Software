@@ -1,6 +1,8 @@
 import { Delete } from '@mui/icons-material';
 import { Button, FormControl, InputLabel, MenuItem, Paper, Select, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAppSelector, useAppDispatch } from '../../../State/Store';
+import { fetchAllCoupons, deleteCoupon } from '../../../State/admin/AdminCouponSlice';
 
 const accountStatuses = [
     { status: 'PENDING_VERIFICATION', title: 'Pending Verification', description: 'Account is created but not yet verified' },
@@ -31,89 +33,74 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-
 const Coupon = () => {
-  const [accountStatus, setAccountStatus] = useState("ACTIVE")
+  const [accountStatus, setAccountStatus] = useState('ACTIVE');
+  const dispatch = useAppDispatch();
+  const { coupons, loading, error } = useAppSelector(state => state.adminCoupon);
 
-  const handleChange =(event:any)=>{
-    setAccountStatus(event.target.value)
-  }
+  useEffect(() => {
+    dispatch(fetchAllCoupons());
+  }, [dispatch]);
 
+  const handleChange = (event: any) => {
+    setAccountStatus(event.target.value);
+  };
+
+  if (loading) return <div>Cargando cupones...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
-    <div className='pb-5 w-60'>
+      <div className='pb-5 w-60'>
         <FormControl color='primary' fullWidth>
           <InputLabel id="demo-simple-select-label" className='text-primary-color'>Estado de la cuenta</InputLabel>
-            <Select
-                id="demo-simple-select"
-                value={accountStatus}
-                label="Estado de la cuenta"
-                onChange={handleChange}
-                color='primary'
-                className='text-primary-color'
-            >
-                {accountStatuses.map((item) =>
-                    <MenuItem value={item.status}>{item.title}</MenuItem>)}
-            </Select>
+          <Select
+            id="demo-simple-select"
+            value={accountStatus}
+            label="Estado de la cuenta"
+            onChange={handleChange}
+            color='primary'
+            className='text-primary-color'
+          >
+            {accountStatuses.map((item) =>
+              <MenuItem value={item.status} key={item.status}>{item.title}</MenuItem>)}
+          </Select>
         </FormControl>
-    </div>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>Código Cupón</StyledTableCell>
-                  <StyledTableCell>Fecha Inicio</StyledTableCell>
-                  <StyledTableCell>Fecha Final</StyledTableCell>
-                  <StyledTableCell align="right">Orden mínima</StyledTableCell>
-                  <StyledTableCell align="right">Descuento%</StyledTableCell>
-                  <StyledTableCell align="right">Estado</StyledTableCell>
-                  <StyledTableCell align="right">Borrar</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <StyledTableRow key={row.name}>
-                    <StyledTableCell component="th" scope="row">
-                      {row.name}
-                    </StyledTableCell>
-                    <StyledTableCell>{row.calories}</StyledTableCell>
-                    <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                    <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                    <StyledTableCell align="right">{row.protein}</StyledTableCell>
-                    <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                    <StyledTableCell align="right">
-                      <Button>
-                        <Delete/>
-                      </Button>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))};
-
-              </TableBody>
-            </Table>
-          </TableContainer>
+      </div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Código Cupón</StyledTableCell>
+              <StyledTableCell>Fecha Inicio</StyledTableCell>
+              <StyledTableCell>Fecha Final</StyledTableCell>
+              <StyledTableCell align="right">Orden mínima</StyledTableCell>
+              <StyledTableCell align="right">Descuento%</StyledTableCell>
+              <StyledTableCell align="right">Estado</StyledTableCell>
+              <StyledTableCell align="right">Borrar</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {coupons.map((coupon) => (
+              <StyledTableRow key={coupon.id}>
+                <StyledTableCell component="th" scope="row">{coupon.code}</StyledTableCell>
+                <StyledTableCell>{coupon.validityStartDate}</StyledTableCell>
+                <StyledTableCell>{coupon.validityEndDate}</StyledTableCell>
+                <StyledTableCell align="right">{coupon.minimumOrderValue}</StyledTableCell>
+                <StyledTableCell align="right">{coupon.discountPercentage}</StyledTableCell>
+                <StyledTableCell align="right">{coupon.active ? 'Activo' : 'Inactivo'}</StyledTableCell>
+                <StyledTableCell align="right">
+                  <Button onClick={() => dispatch(deleteCoupon({ id: coupon.id }))}>
+                    <Delete />
+                  </Button>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))};
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
-    
-  )
-}
+  );
+};
 
-export default Coupon
+export default Coupon;

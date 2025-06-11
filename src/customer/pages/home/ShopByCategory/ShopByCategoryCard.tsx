@@ -1,11 +1,13 @@
 import React from 'react';
-import MouseImg from '../../../../Assets/mouse.png'; // Asegúrate de que la ruta sea correcta
-
-// Paso 1: Importa tu archivo CSS
+import { HomeCategory } from '../../../../types/HomeTypes';
 import './ShopByCategory.css';
 
+interface ShopByCategoryCardProps {
+  category: HomeCategory;
+}
+
 // Componente ShopByCategoryCard: muestra una tarjeta circular para una categoría destacada
-const ShopByCategoryCard = () => {
+const ShopByCategoryCard: React.FC<ShopByCategoryCardProps> = ({ category }) => {
   // Renderiza la tarjeta circular con imagen y título de la categoría
   return (
     // Mantenemos Tailwind para el layout (flex, gap, etc.) y la funcionalidad 'group'
@@ -20,8 +22,8 @@ const ShopByCategoryCard = () => {
         {/* Usamos nuestra clase CSS para el estilo de la imagen */}
         <img 
           className='category-card-image'
-          src={MouseImg} 
-          alt="Categoría Periféricos" 
+          src={category.image}
+          alt={category.name || 'Categoría'}
         />
       </div>
       
@@ -29,7 +31,7 @@ const ShopByCategoryCard = () => {
         Mantenemos Tailwind para la tipografía (tamaño y peso).
       */}
       <h3 className='category-card-title text-xl font-semibold'>
-        Periféricos
+        {category.name || 'Categoría'}
       </h3>
 
     </div>

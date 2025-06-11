@@ -74,6 +74,7 @@ export const fetchUserProfile = createAsyncThunk<any, any>(
 
 
 interface AuthState {
+  error: string | null;
   jwt: string | null;
   otpSent: boolean;
   isLoggedIn: boolean;
@@ -82,6 +83,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
+  error: null,
   jwt: null,
   otpSent: false,
   isLoggedIn: false,

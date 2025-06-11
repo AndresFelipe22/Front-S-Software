@@ -1,20 +1,24 @@
 // Componente Navbar: barra de navegación principal de la tienda
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import "./Navbar.css"; 
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import AddShoppingCart from "@mui/icons-material/AddShoppingCart";
 import Storefront from "@mui/icons-material/Storefront";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-import { useTheme, useMediaQuery } from "@mui/material";
+import { useTheme, useMediaQuery, Drawer } from "@mui/material";
 import CategorySheet from "./CategorySheet";
 import { mainCategory } from "../../../data/category/mainCategory";
+import { useAppSelector } from "../../../State/Store";
+import DrawerList from "../../../component/DrawerList";
 
 // Navbar: muestra logo, navegación de categorías, acciones de usuario y acceso rápido a carrito y favoritos
 const Navbar = () => {
@@ -22,12 +26,28 @@ const Navbar = () => {
   const theme = useTheme();
   // Hook para detectar si la pantalla es grande (breakpoint lg)
   const isLarge = useMediaQuery(theme.breakpoints.up("lg"));
+  const { user, auth, cart } = useAppSelector((store) => store);
   // Estado para la categoría seleccionada en el menú de categorías
   const [selectedCategory, setSelectedCategory] = useState("peripherals");
   // Estado para mostrar/ocultar el panel de categorías
   const [showCategorySheet, setShowCategorySheet] = useState(false);
   // Hook de navegación de React Router
   const navigate = useNavigate();
+
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
+
+
+
+  // const becomeSellerClick = () => {
+  //   if (sellers.profile?.id) {
+  //     navigate("/seller")
+  //   } else navigate("/become-seller")
+  // }
+
 
   return (
     // Contenedor principal sticky para mantener la barra fija arriba
@@ -39,8 +59,8 @@ const Navbar = () => {
           <div className="flex items-center gap-2">
             {/* Menú hamburguesa solo en móvil */}
             {!isLarge && (
-              <IconButton aria-label="Abrir menú de navegación">
-                <MenuIcon />
+              <IconButton onClick={() => toggleDrawer(true)()}>
+                <MenuIcon className="text-gray-700" sx={{ fontSize: 29 }} />
               </IconButton>
             )}
             {/* Logo clickable */}
@@ -53,9 +73,10 @@ const Navbar = () => {
           </div>
           {/* Navegación de categorías principales */}
           <nav aria-label="Categorías principales">
+            {isLarge && (
             <ul className="flex items-center font-medium text-gray-900">
               {mainCategory.map(
-                (item) => 
+                (item) => (
                   <li
                     onMouseLeave={()=>{
                       setShowCategorySheet(false);
@@ -68,20 +89,21 @@ const Navbar = () => {
                   >
                     {item.name}
                   </li>
-              )}
+              ))}
             </ul>
+            )}
           </nav>
         </div>
 
         {/* Sección derecha: acciones de usuario y botones rápidos */}
         <div className="flex gap-1 lg:gap-6 items-center">
           {/* Buscar */}
-          <IconButton aria-label="Buscar">
-            <SearchIcon />
+          <IconButton aria-label="Buscar" onClick={()=>navigate("/search-products")}>
+            <SearchIcon className="text-gray-700" sx={{ fontSize: 29 }} />
           </IconButton>
           {/* Favoritos */}
           <IconButton onClick={()=>navigate("/wishlist")} aria-label="Favoritos">
-            <FavoriteBorder sx={{ fontSize: 29 }} />
+            <FavoriteBorder className="text-gray-700" sx={{ fontSize: 29 }} />
           </IconButton>
           {/* Carrito */}
           <IconButton onClick={() => navigate("/cart")} aria-label="Carrito">
@@ -89,7 +111,28 @@ const Navbar = () => {
           </IconButton>
 
           {/* Usuario autenticado: muestra avatar y nombre, si no, botón de login */}
-          <Button onClick={()=>navigate("/login")} variant="contained">Login</Button>
+          {user && user.user ? (
+          <Button
+            onClick={() => navigate("/account/orders")}
+            className="flex items-center gap-2"
+          >
+            <Avatar
+              sx={{ width: 29, height: 29 }}
+              src="https://cdn.pixabay.com/photo/2015/04/15/09/28/head-723540_640.jpg"
+            />
+            <h1 className="font-semibold hidden lg:block">
+              {user.user?.fullName?.split(" ")[0]}
+            </h1>
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            startIcon={<AccountCircleIcon sx={{ fontSize: "12px" }} />}
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </Button>
+        )}
 
           {/* Botón para vendedores solo en pantallas grandes */}
           {isLarge && (
@@ -104,6 +147,10 @@ const Navbar = () => {
         </div>
       </div>
       {/* Panel de subcategorías, visible al hacer hover sobre una categoría */}
+      <Drawer open={open} onClose={toggleDrawer(false)}>
+        {/* Pasa los menús requeridos y la función para cerrar el Drawer */}
+        <DrawerList menu={mainCategory} menu2={[]} toggleDrawer={() => setOpen(false)} />
+      </Drawer>
       { showCategorySheet && <div 
       onMouseLeave={()=>setShowCategorySheet(false)}
       onMouseEnter={()=>setShowCategorySheet(true)}

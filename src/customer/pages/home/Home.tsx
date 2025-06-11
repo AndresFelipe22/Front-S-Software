@@ -1,12 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PeripheralsCategory from './PeripheralsCategory/PeripheralsCategory'
 import Deal from './Deal/Deal'
 import ShopBycategory from './ShopByCategory/ShopBycategory'
 import Button from '@mui/material/Button'
 import Storefront from '@mui/icons-material/Storefront'
 import CategoryGrid from './CategoryGrid/CategoryGrid'
+import { useAppDispatch, useAppSelector } from '../../../State/Store'
+import { fetchHomePageData } from '../../../State/customer/CustomerSlice'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
+  const dispatch = useAppDispatch()
+  const { homePageData, loading, error } = useAppSelector((state) => state.homePage)
+  const navigate = useNavigate();
+
+  // Handler para el botón 'Vende con nosotros'
+  const becomeSellerClick = () => {
+    navigate('/become-seller');
+  };
+
+  useEffect(() => {
+    dispatch(fetchHomePageData())
+  }, [dispatch])
+
+  // Renderizar la UI general aunque haya error, pero mostrar mensaje si no hay datos
+  // El mensaje de error solo se muestra si no hay datos y hay error
+  const showFallback = !homePageData || Object.keys(homePageData).length === 0;
+
   return (
     <>
     <div className='space-y-5 lg:space-y-10 relative'>
@@ -67,7 +87,11 @@ const Home = () => {
           </div>
           {/* CTA Button */}
           <div className="pt-4 lg:pt-8">
-            <Button startIcon={<Storefront />} variant="contained" >
+            <Button
+              onClick={becomeSellerClick}
+              startIcon={<Storefront />}
+              variant="contained"
+            >
               Vende con nosotros
             </Button>
           </div>
@@ -77,20 +101,46 @@ const Home = () => {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/20 to-transparent"></div>
     </section>
         {/* Categorías principales */}
-        <CategoryGrid />
+        <CategoryGrid categories={
+          (homePageData?.grid || []).map(cat => ({
+            name: cat.name || '',
+            image: cat.image || '',
+            categoryId: cat.categoryId || ''
+          }))
+        } />
         {/* Ofertas */}
         <section className='pt-20'>
           <h1 className='text-lg lg-text-4xl font-bold text-primary-color pb-5 lg:pb-20 text-center'>
             Ofertas</h1>
-          <Deal />
+          {/* Siempre renderiza Deal, aunque no haya datos, para mantener la UI */}
+          <Deal deals={homePageData?.deals || []} />
         </section>
-       
         {/* Shop by category */}
         <section className='pt-20'>
           <h1 className='text-lg lg-text-4xl font-bold text-primary-color pb-5 lg:pb-20 text-center'>
             Categorías</h1>
-          <ShopBycategory/>
+          {/* Siempre renderiza ShopBycategory, aunque no haya datos, para mantener la UI */}
+          <ShopBycategory categories={homePageData?.shopByCategories || []} />
+          {/* Si no hay categorías, muestra mensaje visual */}
+          {(!homePageData?.shopByCategories || homePageData.shopByCategories.length === 0) && (
+            <div className="w-full text-center py-10 text-gray-400">
+              No hay categorías para mostrar en este momento.
+            </div>
+          )}
         </section>
+        {/* Fallback visual si no hay datos en toda la home */}
+        {showFallback && (
+          <div className="w-full text-center py-10 text-gray-400">
+            {error ? (
+              <>
+                <div className="text-red-500 font-semibold mb-2">No se pudo cargar la información de la página principal.</div>
+                <div>Mostrando vista general. Intenta recargar más tarde.</div>
+              </>
+            ) : (
+              <div>¡Bienvenido! Explora las categorías y ofertas.</div>
+            )}
+          </div>
+        )}
     </div>
     </>
   )
