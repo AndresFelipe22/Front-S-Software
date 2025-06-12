@@ -35,6 +35,30 @@ export const getAllDeals = createAsyncThunk(
   }
 );
 
+export const deleteDeal = createAsyncThunk(
+  "adminDeals/deleteDeal",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      await api.delete(`/admin/deals/${id}`);
+      return id;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || "Error al eliminar oferta");
+    }
+  }
+);
+
+export const updateDeal = createAsyncThunk(
+  "adminDeals/updateDeal",
+  async (deal: { id: number; discount: number; category: { categoryId: string; image: string; name: string } }, { rejectWithValue }) => {
+    try {
+      const response = await api.put(`/admin/deals/${deal.id}`, deal);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || "Error al actualizar oferta");
+    }
+  }
+);
+
 const dealSlice = createSlice({
   name: "adminDeals",
   initialState,
@@ -69,6 +93,34 @@ const dealSlice = createSlice({
         state.loading = false;
       })
       .addCase(getAllDeals.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deleteDeal.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteDeal.fulfilled, (state, action) => {
+        state.deals = state.deals.filter(deal => deal.id !== action.payload);
+        state.loading = false;
+      })
+      .addCase(deleteDeal.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateDeal.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateDeal.fulfilled, (state, action: PayloadAction<Deal>) => {
+        const index = state.deals.findIndex(deal => deal.id === action.payload.id);
+        if (index !== -1) {
+          state.deals[index] = action.payload;
+        }
+        state.loading = false;
+        state.dealUpdated = true;
+      })
+      .addCase(updateDeal.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

@@ -1,6 +1,25 @@
-import { Delete } from '@mui/icons-material';
-import { Button, FormControl, InputLabel, MenuItem, Paper, Select, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { DeleteOutline } from '@mui/icons-material';
+import { 
+  Button, 
+  FormControl, 
+  IconButton,
+  InputLabel, 
+  MenuItem, 
+  Paper, 
+  Select, 
+  styled, 
+  Table, 
+  TableBody, 
+  TableCell, 
+  tableCellClasses, 
+  TableContainer, 
+  TableHead, 
+  TableRow,
+  TablePagination,
+  TableFooter
+} from '@mui/material';
+import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
+import React, { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../State/Store';
 import { fetchAllCoupons, deleteCoupon } from '../../../State/admin/AdminCouponSlice';
 
@@ -34,7 +53,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const Coupon = () => {
-  const [accountStatus, setAccountStatus] = useState('ACTIVE');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [status, setStatus] = useState('ACTIVE');
   const dispatch = useAppDispatch();
   const { coupons, loading, error } = useAppSelector(state => state.adminCoupon);
 
@@ -42,23 +63,35 @@ const Coupon = () => {
     dispatch(fetchAllCoupons());
   }, [dispatch]);
 
-  const handleChange = (event: any) => {
-    setAccountStatus(event.target.value);
+  const handleChangePage = (event: any, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: any) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleStatusChange = (event: any) => {
+    setStatus(event.target.value);
+  };
+
+  const handleDeleteCoupon = (id: number) => {
+    dispatch(deleteCoupon({ id }));
   };
 
   if (loading) return <div>Cargando cupones...</div>;
   if (error) return <div>Error: {error}</div>;
-
   return (
     <>
       <div className='pb-5 w-60'>
         <FormControl color='primary' fullWidth>
-          <InputLabel id="demo-simple-select-label" className='text-primary-color'>Estado de la cuenta</InputLabel>
+          <InputLabel id="status-select-label" className='text-primary-color'>Estado de la cuenta</InputLabel>
           <Select
-            id="demo-simple-select"
-            value={accountStatus}
+            id="status-select"
+            value={status}
             label="Estado de la cuenta"
-            onChange={handleChange}
+            onChange={handleStatusChange}
             color='primary'
             className='text-primary-color'
           >
@@ -74,29 +107,50 @@ const Coupon = () => {
               <StyledTableCell>Código Cupón</StyledTableCell>
               <StyledTableCell>Fecha Inicio</StyledTableCell>
               <StyledTableCell>Fecha Final</StyledTableCell>
-              <StyledTableCell align="right">Orden mínima</StyledTableCell>
-              <StyledTableCell align="right">Descuento%</StyledTableCell>
-              <StyledTableCell align="right">Estado</StyledTableCell>
-              <StyledTableCell align="right">Borrar</StyledTableCell>
+              <StyledTableCell>Orden mínima</StyledTableCell>
+              <StyledTableCell>Descuento %</StyledTableCell>
+              <StyledTableCell>Estado</StyledTableCell>
+              <StyledTableCell align="right">Acciones</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {coupons.map((coupon) => (
+            {(rowsPerPage > 0
+              ? coupons.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : coupons
+            ).map((coupon) => (
               <StyledTableRow key={coupon.id}>
                 <StyledTableCell component="th" scope="row">{coupon.code}</StyledTableCell>
                 <StyledTableCell>{coupon.validityStartDate}</StyledTableCell>
                 <StyledTableCell>{coupon.validityEndDate}</StyledTableCell>
-                <StyledTableCell align="right">{coupon.minimumOrderValue}</StyledTableCell>
-                <StyledTableCell align="right">{coupon.discountPercentage}</StyledTableCell>
-                <StyledTableCell align="right">{coupon.active ? 'Activo' : 'Inactivo'}</StyledTableCell>
+                <StyledTableCell>{coupon.minimumOrderValue}</StyledTableCell>
+                <StyledTableCell>{coupon.discountPercentage}</StyledTableCell>
+                <StyledTableCell>{coupon.active ? 'Activo' : 'Inactivo'}</StyledTableCell>
                 <StyledTableCell align="right">
-                  <Button onClick={() => dispatch(deleteCoupon({ id: coupon.id }))}>
-                    <Delete />
-                  </Button>
+                  <IconButton onClick={() => handleDeleteCoupon(coupon.id)}>
+                    <DeleteOutline className='text-red-700 cursor-pointer' />
+                  </IconButton>
                 </StyledTableCell>
               </StyledTableRow>
-            ))};
+            ))}
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                colSpan={7}
+                count={coupons.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: { 'aria-label': 'rows per page' },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
         </Table>
       </TableContainer>
     </>

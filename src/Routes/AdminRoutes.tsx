@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import SellerTable from '../admin/pages/Seller/SellersTable'
-import Coupon from '../admin/pages/Coupon/Coupon'
+import Coupon from '../admin/pages/Coupon/CouponTable'
 import AddNewCouponForm from '../admin/pages/Coupon/AddNewCouponForm'
 import GridTable from '../admin/pages/HomePage/GridTable'
 import EletronicTable from '../admin/pages/HomePage/EletronicTable'

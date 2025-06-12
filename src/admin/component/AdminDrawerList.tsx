@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { AccountBox, Add, Category, Dashboard, ElectricBolt, Home, IntegrationInstructions, LocalOffer, Logout } from '@mui/icons-material';
-import DrawerList from '../../component/DrawerList';
+import DrawerList from '../components/drawerList/DrawerList';
 
 
 const menu = [
@@ -70,7 +70,7 @@ const menu2 = [
 
 const AdminDrawerList = ({toggleDrawer}:any) => {
   return (
-    <div>
+    <div key="admin-drawer">
         <DrawerList menu={menu} menu2={menu2} toggleDrawer={toggleDrawer} />
     </div>
   )

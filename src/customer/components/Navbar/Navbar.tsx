@@ -1,6 +1,6 @@
 // Componente Navbar: barra de navegación principal de la tienda
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css"; 
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -19,6 +19,8 @@ import CategorySheet from "./CategorySheet";
 import { mainCategory } from "../../../data/category/mainCategory";
 import { useAppSelector } from "../../../State/Store";
 import DrawerList from "../../../component/DrawerList";
+import AdminDrawerList from "../../../admin/component/AdminDrawerList";
+import SellerDrawerList from "../../../seller/components/SellerDrawerList/SellerDrawerList";
 
 // Navbar: muestra logo, navegación de categorías, acciones de usuario y acceso rápido a carrito y favoritos
 const Navbar = () => {
@@ -33,12 +35,17 @@ const Navbar = () => {
   const [showCategorySheet, setShowCategorySheet] = useState(false);
   // Hook de navegación de React Router
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
+
+  // Detectar si estamos en /admin o /seller
+  const isAdmin = location.pathname.startsWith("/admin");
+  const isSeller = location.pathname.startsWith("/seller");
 
 
 
@@ -71,47 +78,55 @@ const Navbar = () => {
               className="h-10 cursor-pointer select-none"
             />
           </div>
-          {/* Navegación de categorías principales */}
-          <nav aria-label="Categorías principales">
-            {isLarge && (
-            <ul className="flex items-center font-medium text-gray-900">
-              {mainCategory.map(
-                (item) => (
-                  <li
-                    onMouseLeave={()=>{
-                      setShowCategorySheet(false);
-                    }}
-                    onMouseEnter={()=>{
-                      setShowCategorySheet(true);
-                      setSelectedCategory(item.categoryId);
-                    }}
-                    className="mainCategory hover:text-primary-color hover:border-b-2 h-[70px] px-4 border-primary-color flex items-center"
-                  >
-                    {item.name}
-                  </li>
-              ))}
-            </ul>
-            )}
-          </nav>
+          {/* Navegación de categorías principales SOLO si no es admin/seller */}
+          {!isAdmin && !isSeller && (
+            <nav aria-label="Categorías principales">
+              {isLarge && (
+                <ul className="flex items-center font-medium text-gray-900">
+                  {mainCategory.map(
+                    (item) => (
+                      <li
+                        onMouseLeave={()=>{
+                          setShowCategorySheet(false);
+                        }}
+                        onMouseEnter={()=>{
+                          setShowCategorySheet(true);
+                          setSelectedCategory(item.categoryId);
+                        }}
+                        className="mainCategory hover:text-primary-color hover:border-b-2 h-[70px] px-4 border-primary-color flex items-center"
+                      >
+                        {item.name}
+                      </li>
+                  ))}
+                </ul>
+              )}
+            </nav>
+          )}
         </div>
 
         {/* Sección derecha: acciones de usuario y botones rápidos */}
         <div className="flex gap-1 lg:gap-6 items-center">
           {/* Buscar */}
-          <IconButton aria-label="Buscar" onClick={()=>navigate("/search-products")}>
-            <SearchIcon className="text-gray-700" sx={{ fontSize: 29 }} />
-          </IconButton>
+          {!isAdmin && !isSeller && (
+            <IconButton aria-label="Buscar" onClick={() => navigate("/search-products")}>
+              <SearchIcon className="text-gray-700" sx={{ fontSize: 29 }} />
+            </IconButton>
+          )}
           {/* Favoritos */}
-          <IconButton onClick={()=>navigate("/wishlist")} aria-label="Favoritos">
-            <FavoriteBorder className="text-gray-700" sx={{ fontSize: 29 }} />
-          </IconButton>
+          {!isAdmin && !isSeller && (
+            <IconButton onClick={() => navigate("/wishlist")} aria-label="Favoritos">
+              <FavoriteBorder className="text-gray-700" sx={{ fontSize: 29 }} />
+            </IconButton>
+          )}
           {/* Carrito */}
-          <IconButton onClick={() => navigate("/cart")} aria-label="Carrito">
-            <AddShoppingCart className="text-gray-950" sx={{ fontSize: 29 }} />
-          </IconButton>
+          {!isAdmin && !isSeller && (
+            <IconButton onClick={() => navigate("/cart")} aria-label="Carrito">
+              <AddShoppingCart className="text-gray-950" sx={{ fontSize: 29 }} />
+            </IconButton>
+          )}
 
           {/* Usuario autenticado: muestra avatar y nombre, si no, botón de login */}
-          {user && user.user ? (
+          {!isAdmin && !isSeller && (user && user.user ? (
           <Button
             onClick={() => navigate("/account/orders")}
             className="flex items-center gap-2"
@@ -132,10 +147,10 @@ const Navbar = () => {
           >
             Login
           </Button>
-        )}
+        ))}
 
           {/* Botón para vendedores solo en pantallas grandes */}
-          {isLarge && (
+          {!isAdmin && !isSeller && isLarge && (
             <Button
               onClick={() => navigate("/become-seller")}
               startIcon={<Storefront />}
@@ -146,17 +161,25 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      {/* Panel de subcategorías, visible al hacer hover sobre una categoría */}
+      {/* Drawer para menú móvil: muestra el DrawerList correspondiente */}
       <Drawer open={open} onClose={toggleDrawer(false)}>
-        {/* Pasa los menús requeridos y la función para cerrar el Drawer */}
-        <DrawerList menu={mainCategory} menu2={[]} toggleDrawer={() => setOpen(false)} />
+        {isAdmin ? (
+          <AdminDrawerList toggleDrawer={() => setOpen(false)} />
+        ) : isSeller ? (
+          <SellerDrawerList toggleDrawer={() => setOpen(false)} />
+        ) : (
+          <DrawerList menu={mainCategory} menu2={[]} toggleDrawer={() => setOpen(false)} />
+        )}
       </Drawer>
-      { showCategorySheet && <div 
-      onMouseLeave={()=>setShowCategorySheet(false)}
-      onMouseEnter={()=>setShowCategorySheet(true)}
-      className="categorySheet absolute top-4[4.41rem] left-20 right-20 border ">
-        <CategorySheet selectedCategory={selectedCategory} />
-      </div>}
+      {/* Panel de subcategorías SOLO si no es admin/seller */}
+      {!isAdmin && !isSeller && showCategorySheet && (
+        <div 
+        onMouseLeave={() => setShowCategorySheet(false)}
+        onMouseEnter={() => setShowCategorySheet(true)}
+        className="categorySheet absolute top-4[4.41rem] left-20 right-20 border ">
+          <CategorySheet selectedCategory={selectedCategory} />
+        </div>
+      )}
     </Box>
   );
 };

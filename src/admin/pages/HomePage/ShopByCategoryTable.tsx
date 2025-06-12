@@ -1,14 +1,32 @@
-import React from 'react'
-import HomeCategoryTable from './HomeCategoryTable'
-import { useAppSelector } from '../../../State/Store'
+import React from 'react';
+import { Box, Typography } from '@mui/material';
+import { useAppSelector } from '../../../State/Store';
+import HomeCategoryTable from './HomeCategoryTable';
 
-const ShopByCategoryTable = () => {
-  const { homePageData } = useAppSelector((state: any) => state.homePage)
+const ShopByCategoryTable: React.FC = () => {
+  const { homePage } = useAppSelector((state) => state);
+  const categories = homePage.homePageData?.shopByCategories || [];
+
+  if (categories.length === 0) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+        <Typography variant="subtitle1">No hay categorías de compra disponibles</Typography>
+      </Box>
+    );
+  }
+
+  const formattedCategories = categories.map(cat => ({
+    id: cat.id,
+    categoryId: cat.categoryId || '',
+    name: cat.name || '',
+    image: cat.image || ''
+  }));
+
   return (
-    <div>
-      <HomeCategoryTable categories={homePageData?.shopByCategories || []} />
-    </div>
-  )
-}
+    <Box>
+      <HomeCategoryTable categories={formattedCategories} />
+    </Box>
+  );
+};
 
-export default ShopByCategoryTable
+export default ShopByCategoryTable;
